@@ -4,11 +4,17 @@ import { Badge } from "@/components/ui/badge";
 import Navigation from "@/components/Navigation";
 import SellerDetailsModal from "@/components/SellerDetailsModal";
 import ContactModal from "@/components/ContactModal";
+import FilterModal from "@/components/FilterModal";
+import SellerFormModal from "@/components/SellerFormModal";
 
 const Buyers = () => {
   const [selectedSeller, setSelectedSeller] = useState(null);
   const [showContact, setShowContact] = useState(false);
   const [contactInfo, setContactInfo] = useState(null);
+  const [showFilter, setShowFilter] = useState(false);
+  const [showSellerForm, setShowSellerForm] = useState(false);
+  const [editingSeller, setEditingSeller] = useState(null);
+  const [filters, setFilters] = useState({});
 
   const sellers = [
     {
@@ -20,7 +26,6 @@ const Buyers = () => {
       location: 'Rajshahi',
       transactionType: 'Nagad',
       transactionId: 'TXN12345',
-      rating: 4.8,
       totalOrders: 156,
       joinDate: 'Jan 2023',
       products: ['Rice', 'Wheat', 'Corn']
@@ -32,9 +37,8 @@ const Buyers = () => {
       phone: '+8801712345002',
       email: 'agroagency@gmail.com',
       location: 'Dhaka',
-      transactionType: 'Bkash',
+      transactionType: 'bKash',
       transactionId: 'TXN12346',
-      rating: 4.6,
       totalOrders: 234,
       joinDate: 'Mar 2022',
       products: ['Wheat', 'Barley', 'Oats']
@@ -48,7 +52,6 @@ const Buyers = () => {
       location: 'Gazipur',
       transactionType: 'Nagad',
       transactionId: 'TXN12347',
-      rating: 4.9,
       totalOrders: 189,
       joinDate: 'Jul 2023',
       products: ['Corn', 'Soybean', 'Sunflower']
@@ -60,9 +63,8 @@ const Buyers = () => {
       phone: '+8801712345004',
       email: 'greenvalley@gmail.com',
       location: 'Cumilla',
-      transactionType: 'Bkash',
+      transactionType: 'bKash',
       transactionId: 'TXN12348',
-      rating: 4.7,
       totalOrders: 298,
       joinDate: 'Nov 2021',
       products: ['Tomato', 'Pepper', 'Cucumber']
@@ -76,7 +78,6 @@ const Buyers = () => {
       location: 'Bogura',
       transactionType: 'Nagad',
       transactionId: 'TXN12349',
-      rating: 4.5,
       totalOrders: 167,
       joinDate: 'Sep 2022',
       products: ['Potato', 'Onion', 'Garlic']
@@ -93,20 +94,30 @@ const Buyers = () => {
     setShowContact(true);
   };
 
-  const getRatingStars = (rating) => {
-    return (
-      <div className="flex items-center">
-        <span className="text-sm font-medium mr-1">{rating}</span>
-        <div className="flex">
-          {[...Array(5)].map((_, i) => (
-            <svg key={i} className={`w-4 h-4 ${i < Math.floor(rating) ? 'text-yellow-400' : 'text-gray-300'}`} fill="currentColor" viewBox="0 0 20 20">
-              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-            </svg>
-          ))}
-        </div>
-      </div>
-    );
+  const handleEdit = (seller) => {
+    setEditingSeller(seller);
+    setShowSellerForm(true);
   };
+
+  const handleCreate = () => {
+    setEditingSeller(null);
+    setShowSellerForm(true);
+  };
+
+  const handleSaveSeller = (sellerData) => {
+    console.log('Saving seller:', sellerData);
+    // Here you would typically save to your backend
+  };
+
+  const handleApplyFilter = (newFilters) => {
+    setFilters(newFilters);
+  };
+
+  const filteredSellers = sellers.filter(seller => {
+    const matchesFilter = (!filters.search || seller.shopName.toLowerCase().includes(filters.search.toLowerCase())) &&
+      (!filters.location || seller.location.toLowerCase().includes(filters.location.toLowerCase()));
+    return matchesFilter;
+  });
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -125,6 +136,21 @@ const Buyers = () => {
           </div>
         </div>
 
+        <div className="flex items-center gap-4 mb-8">
+          <Button variant="outline" className="gap-2" onClick={() => setShowFilter(true)}>
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
+            </svg>
+            Filter
+          </Button>
+          <Button className="bg-green-600 hover:bg-green-700 gap-2" onClick={handleCreate}>
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+            </svg>
+            Create Seller
+          </Button>
+        </div>
+
         <div className="bg-white rounded-xl shadow-sm border overflow-hidden">
           <div className="p-6 border-b">
             <h2 className="text-lg font-semibold">List of Verified Sellers</h2>
@@ -139,13 +165,12 @@ const Buyers = () => {
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Owner</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Phone</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Location</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rating</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Transaction</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {sellers.map((seller) => (
+                {filteredSellers.map((seller) => (
                   <tr key={seller.id} className="hover:bg-gray-50 transition-colors">
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{seller.id}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{seller.shopName}</td>
@@ -157,13 +182,19 @@ const Buyers = () => {
                       </svg>
                       {seller.location}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">{getRatingStars(seller.rating)}</td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <Badge className={seller.transactionType === 'Nagad' ? 'bg-orange-100 text-orange-800' : 'bg-pink-100 text-pink-800'}>
                         {seller.transactionType}
                       </Badge>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
+                      <Button 
+                        variant="outline" 
+                        size="sm"
+                        onClick={() => handleEdit(seller)}
+                      >
+                        Edit
+                      </Button>
                       <Button 
                         variant="outline" 
                         size="sm"
@@ -197,6 +228,20 @@ const Buyers = () => {
         isOpen={showContact}
         contactInfo={contactInfo}
         onClose={() => setShowContact(false)}
+      />
+
+      <FilterModal 
+        isOpen={showFilter}
+        onClose={() => setShowFilter(false)}
+        onApplyFilter={handleApplyFilter}
+        filterType="Sellers"
+      />
+
+      <SellerFormModal 
+        isOpen={showSellerForm}
+        onClose={() => setShowSellerForm(false)}
+        onSave={handleSaveSeller}
+        seller={editingSeller}
       />
     </div>
   );

@@ -1,13 +1,15 @@
-
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import Navigation from "@/components/Navigation";
 import TrackingModal from "@/components/TrackingModal";
+import FilterModal from "@/components/FilterModal";
 
 const TrackOrders = () => {
-  const [activeTab, setActiveTab] = useState('active');
   const [showTracking, setShowTracking] = useState(false);
+  const [selectedOrder, setSelectedOrder] = useState(null);
+  const [showFilter, setShowFilter] = useState(false);
+  const [filters, setFilters] = useState({});
 
   const orders = [
     {
@@ -174,6 +176,61 @@ const TrackOrders = () => {
       location: 'Narayanganj',
       estimatedDelivery: 'Mar 23, 2024',
       trackingId: 'TRK015'
+    },
+    {
+      id: 'ORD016',
+      type: 'Mango',
+      date: 'Mar 21, 2024',
+      status: 'on-the-way',
+      quantity: 500,
+      totalPrice: 2500,
+      location: 'Rajshahi',
+      estimatedDelivery: 'Mar 24, 2024',
+      trackingId: 'TRK016'
+    },
+    {
+      id: 'ORD017',
+      type: 'Banana',
+      date: 'Mar 22, 2024',
+      status: 'shipped',
+      quantity: 300,
+      totalPrice: 900,
+      location: 'Barisal',
+      estimatedDelivery: 'Mar 25, 2024',
+      trackingId: 'TRK017'
+    },
+    {
+      id: 'ORD018',
+      type: 'Jackfruit',
+      date: 'Mar 23, 2024',
+      status: 'waiting-for-transport',
+      quantity: 150,
+      totalPrice: 1500,
+      location: 'Chittagong',
+      estimatedDelivery: 'Mar 26, 2024',
+      trackingId: 'TRK018'
+    },
+    {
+      id: 'ORD019',
+      type: 'Lemon',
+      date: 'Mar 24, 2024',
+      status: 'confirmation-pending',
+      quantity: 100,
+      totalPrice: 800,
+      location: 'Sylhet',
+      estimatedDelivery: 'Mar 27, 2024',
+      trackingId: 'TRK019'
+    },
+    {
+      id: 'ORD020',
+      type: 'Papaya',
+      date: 'Mar 25, 2024',
+      status: 'delivered',
+      quantity: 200,
+      totalPrice: 1600,
+      location: 'Khulna',
+      estimatedDelivery: 'Mar 28, 2024',
+      trackingId: 'TRK020'
     }
   ];
 
@@ -190,9 +247,21 @@ const TrackOrders = () => {
     return <Badge className={config.color}>{config.text}</Badge>;
   };
 
-  const filteredOrders = activeTab === 'active' 
-    ? orders.filter(order => !['delivered'].includes(order.status))
-    : orders;
+  const handleTrack = (order) => {
+    setSelectedOrder(order);
+    setShowTracking(true);
+  };
+
+  const handleApplyFilter = (newFilters) => {
+    setFilters(newFilters);
+  };
+
+  const filteredOrders = orders.filter(order => {
+    const matchesFilter = (!filters.search || order.type.toLowerCase().includes(filters.search.toLowerCase())) &&
+      (!filters.status || order.status === filters.status) &&
+      (!filters.location || order.location.toLowerCase().includes(filters.location.toLowerCase()));
+    return matchesFilter;
+  });
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -211,6 +280,21 @@ const TrackOrders = () => {
           </div>
         </div>
 
+        <div className="flex items-center gap-4 mb-8">
+          <Button variant="outline" className="gap-2" onClick={() => setShowFilter(true)}>
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
+            </svg>
+            Filter Orders
+          </Button>
+          <Button className="bg-green-600 hover:bg-green-700 gap-2">
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+            </svg>
+            Create Order
+          </Button>
+        </div>
+
         <div className="bg-white rounded-xl shadow-sm border overflow-hidden mb-8">
           <div className="p-6 border-b">
             <div className="flex items-center justify-between">
@@ -220,27 +304,6 @@ const TrackOrders = () => {
                 </svg>
                 <h2 className="text-lg font-semibold">My Orders Status</h2>
                 <Badge className="bg-green-100 text-green-800">Active</Badge>
-              </div>
-              <div className="flex gap-2">
-                <Button 
-                  variant={activeTab === 'active' ? 'default' : 'outline'}
-                  size="sm"
-                  onClick={() => setActiveTab('active')}
-                >
-                  <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                  </svg>
-                  Add Order
-                </Button>
-                <Button 
-                  variant="outline"
-                  size="sm"
-                >
-                  <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
-                  </svg>
-                  Filter Orders
-                </Button>
               </div>
             </div>
           </div>
@@ -272,11 +335,17 @@ const TrackOrders = () => {
                       </svg>
                       {order.location}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
                       <Button 
                         variant="outline" 
                         size="sm"
-                        onClick={() => setShowTracking(true)}
+                      >
+                        Edit
+                      </Button>
+                      <Button 
+                        variant="outline" 
+                        size="sm"
+                        onClick={() => handleTrack(order)}
                       >
                         Track
                       </Button>
@@ -292,6 +361,14 @@ const TrackOrders = () => {
       <TrackingModal 
         isOpen={showTracking}
         onClose={() => setShowTracking(false)}
+        currentStatus={selectedOrder?.status}
+      />
+
+      <FilterModal 
+        isOpen={showFilter}
+        onClose={() => setShowFilter(false)}
+        onApplyFilter={handleApplyFilter}
+        filterType="Orders"
       />
     </div>
   );

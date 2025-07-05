@@ -4,10 +4,13 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Navigation from "@/components/Navigation";
 import ContactModal from "@/components/ContactModal";
+import FilterModal from "@/components/FilterModal";
 
 const Transportation = () => {
   const [showContact, setShowContact] = useState(false);
   const [contactInfo, setContactInfo] = useState(null);
+  const [showFilter, setShowFilter] = useState(false);
+  const [filters, setFilters] = useState({});
 
   const transportCompanies = [
     {
@@ -16,7 +19,6 @@ const Transportation = () => {
       vehicle: 'Truck - 104',
       type: 'Truck',
       capacity: '5 tons',
-      rating: 4.8,
       pricePerKm: 12,
       specialization: 'Heavy Cargo',
       coverage: 'Nationwide',
@@ -30,7 +32,6 @@ const Transportation = () => {
       vehicle: 'Pickup - 150',
       type: 'Pickup',
       capacity: '1.5 tons',
-      rating: 4.6,
       pricePerKm: 8,
       specialization: 'Quick Delivery',
       coverage: 'Regional',
@@ -44,7 +45,6 @@ const Transportation = () => {
       vehicle: 'Truck - 302',
       type: 'Truck',
       capacity: '8 tons',
-      rating: 4.9,
       pricePerKm: 15,
       specialization: 'Bulk Transport',
       coverage: 'International',
@@ -58,7 +58,6 @@ const Transportation = () => {
       vehicle: 'Van - 205',
       type: 'Van',
       capacity: '2 tons',
-      rating: 4.7,
       pricePerKm: 10,
       specialization: 'Urban Delivery',
       coverage: 'City Wide',
@@ -72,7 +71,6 @@ const Transportation = () => {
       vehicle: 'Truck - 156',
       type: 'Eco Truck',
       capacity: '6 tons',
-      rating: 4.8,
       pricePerKm: 13,
       specialization: 'Eco-Friendly',
       coverage: 'Regional',
@@ -86,7 +84,6 @@ const Transportation = () => {
       vehicle: 'Mini Truck - 89',
       type: 'Mini Truck',
       capacity: '3 tons',
-      rating: 4.5,
       pricePerKm: 9,
       specialization: 'Small Batches',
       coverage: 'Local',
@@ -106,6 +103,16 @@ const Transportation = () => {
     });
     setShowContact(true);
   };
+
+  const handleApplyFilter = (newFilters) => {
+    setFilters(newFilters);
+  };
+
+  const filteredCompanies = transportCompanies.filter(company => {
+    const matchesFilter = (!filters.search || company.name.toLowerCase().includes(filters.search.toLowerCase())) &&
+      (!filters.location || company.coverage.toLowerCase().includes(filters.location.toLowerCase()));
+    return matchesFilter;
+  });
 
   const getVehicleIcon = (type) => {
     const iconClass = "w-8 h-8";
@@ -139,21 +146,6 @@ const Transportation = () => {
     }
   };
 
-  const getRatingStars = (rating) => {
-    return (
-      <div className="flex items-center">
-        <span className="text-sm font-medium mr-1">{rating}</span>
-        <div className="flex">
-          {[...Array(5)].map((_, i) => (
-            <svg key={i} className={`w-4 h-4 ${i < Math.floor(rating) ? 'text-yellow-400' : 'text-gray-300'}`} fill="currentColor" viewBox="0 0 20 20">
-              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-            </svg>
-          ))}
-        </div>
-      </div>
-    );
-  };
-
   return (
     <div className="min-h-screen bg-gray-50">
       <Navigation />
@@ -171,8 +163,23 @@ const Transportation = () => {
           </div>
         </div>
 
+        <div className="flex items-center gap-4 mb-8">
+          <Button variant="outline" className="gap-2" onClick={() => setShowFilter(true)}>
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
+            </svg>
+            Filter
+          </Button>
+          <Button className="bg-green-600 hover:bg-green-700 gap-2">
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+            </svg>
+            Create Transport
+          </Button>
+        </div>
+
         <div className="grid lg:grid-cols-2 xl:grid-cols-3 gap-6">
-          {transportCompanies.map((company) => (
+          {filteredCompanies.map((company) => (
             <Card key={company.id} className="hover:shadow-lg transition-shadow">
               <CardHeader className="pb-4">
                 <div className="flex items-start justify-between">
@@ -185,7 +192,6 @@ const Transportation = () => {
                       <p className="text-sm text-gray-500">{company.vehicle}</p>
                     </div>
                   </div>
-                  {getRatingStars(company.rating)}
                 </div>
               </CardHeader>
               
@@ -201,7 +207,7 @@ const Transportation = () => {
                   </div>
                   <div>
                     <span className="text-gray-500">Rate:</span>
-                    <p className="font-medium text-green-600">₹{company.pricePerKm}/km</p>
+                    <p className="font-medium text-green-600">৳{company.pricePerKm}/km</p>
                   </div>
                   <div>
                     <span className="text-gray-500">Coverage:</span>
@@ -234,13 +240,16 @@ const Transportation = () => {
                   </div>
                   <div className="flex items-center text-gray-600">
                     <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 002 2v10a2 2 0 002 2z" />
                     </svg>
                     {company.email}
                   </div>
                 </div>
 
                 <div className="flex gap-2 pt-4">
+                  <Button variant="outline" className="flex-1" size="sm">
+                    Edit
+                  </Button>
                   <Button variant="outline" className="flex-1" size="sm">
                     View Details
                   </Button>
@@ -262,6 +271,13 @@ const Transportation = () => {
         isOpen={showContact}
         contactInfo={contactInfo}
         onClose={() => setShowContact(false)}
+      />
+
+      <FilterModal 
+        isOpen={showFilter}
+        onClose={() => setShowFilter(false)}
+        onApplyFilter={handleApplyFilter}
+        filterType="Transportation"
       />
     </div>
   );

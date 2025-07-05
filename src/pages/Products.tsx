@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -7,12 +6,18 @@ import Navigation from "@/components/Navigation";
 import ProductDetailsModal from "@/components/ProductDetailsModal";
 import OrderSuccessModal from "@/components/OrderSuccessModal";
 import TrackingModal from "@/components/TrackingModal";
+import FilterModal from "@/components/FilterModal";
+import ProductFormModal from "@/components/ProductFormModal";
 
 const Products = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [showOrderSuccess, setShowOrderSuccess] = useState(false);
   const [showTracking, setShowTracking] = useState(false);
+  const [showFilter, setShowFilter] = useState(false);
+  const [showProductForm, setShowProductForm] = useState(false);
+  const [editingProduct, setEditingProduct] = useState(null);
+  const [filters, setFilters] = useState({});
 
   const products = [
     {
@@ -98,11 +103,36 @@ const Products = () => {
     setShowTracking(true);
   };
 
-  const filteredProducts = products.filter(product =>
-    product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    product.shopName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    product.location.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const handleEdit = (product) => {
+    setEditingProduct(product);
+    setShowProductForm(true);
+  };
+
+  const handleCreate = () => {
+    setEditingProduct(null);
+    setShowProductForm(true);
+  };
+
+  const handleSaveProduct = (productData) => {
+    console.log('Saving product:', productData);
+    // Here you would typically save to your backend
+  };
+
+  const handleApplyFilter = (newFilters) => {
+    setFilters(newFilters);
+  };
+
+  const filteredProducts = products.filter(product => {
+    const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      product.shopName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      product.location.toLowerCase().includes(searchTerm.toLowerCase());
+    
+    const matchesFilter = (!filters.search || product.name.toLowerCase().includes(filters.search.toLowerCase())) &&
+      (!filters.status || (filters.status === 'available' ? product.quantity >= 100 : product.quantity < 100)) &&
+      (!filters.location || product.location.toLowerCase().includes(filters.location.toLowerCase()));
+
+    return matchesSearch && matchesFilter;
+  });
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -133,11 +163,17 @@ const Products = () => {
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
-          <Button variant="outline" className="gap-2">
+          <Button variant="outline" className="gap-2" onClick={() => setShowFilter(true)}>
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
             </svg>
             Filter
+          </Button>
+          <Button className="bg-green-600 hover:bg-green-700 gap-2" onClick={handleCreate}>
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+            </svg>
+            Create Product
           </Button>
         </div>
 
@@ -157,7 +193,7 @@ const Products = () => {
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Shop Name</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Location</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
@@ -176,9 +212,17 @@ const Products = () => {
                       {product.location}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">{getStatusBadge(product.status, product.quantity)}</td>
-                    <td className="px-6 py-4 whitespace-nowrap">
+                    <td className="px-6 py-4 whitespace-nowrap space-x-2">
+                      <Button 
+                        variant="outline"
+                        size="sm"
+                        onClick={() => handleEdit(product)}
+                      >
+                        Edit
+                      </Button>
                       <Button 
                         className="bg-green-600 hover:bg-green-700 text-sm"
+                        size="sm"
                         onClick={() => handleOrderNow(product)}
                       >
                         Order Now
@@ -207,6 +251,20 @@ const Products = () => {
       <TrackingModal 
         isOpen={showTracking}
         onClose={() => setShowTracking(false)}
+      />
+
+      <FilterModal 
+        isOpen={showFilter}
+        onClose={() => setShowFilter(false)}
+        onApplyFilter={handleApplyFilter}
+        filterType="Products"
+      />
+
+      <ProductFormModal 
+        isOpen={showProductForm}
+        onClose={() => setShowProductForm(false)}
+        onSave={handleSaveProduct}
+        product={editingProduct}
       />
     </div>
   );

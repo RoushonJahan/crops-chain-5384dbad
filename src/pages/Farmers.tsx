@@ -1,15 +1,20 @@
-
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import Navigation from "@/components/Navigation";
 import SellerDetailsModal from "@/components/SellerDetailsModal";
 import ContactModal from "@/components/ContactModal";
+import FilterModal from "@/components/FilterModal";
+import SellerFormModal from "@/components/SellerFormModal";
 
 const Farmers = () => {
   const [selectedSeller, setSelectedSeller] = useState(null);
   const [showContact, setShowContact] = useState(false);
   const [contactInfo, setContactInfo] = useState(null);
+  const [showFilter, setShowFilter] = useState(false);
+  const [showSellerForm, setShowSellerForm] = useState(false);
+  const [editingSeller, setEditingSeller] = useState(null);
+  const [filters, setFilters] = useState({});
 
   const sellers = [
     {
@@ -102,6 +107,30 @@ const Farmers = () => {
     setSelectedSeller(null);
   };
 
+  const handleEdit = (seller) => {
+    setEditingSeller(seller);
+    setShowSellerForm(true);
+  };
+
+  const handleCreate = () => {
+    setEditingSeller(null);
+    setShowSellerForm(true);
+  };
+
+  const handleSaveSeller = (sellerData) => {
+    console.log('Saving seller:', sellerData);
+  };
+
+  const handleApplyFilter = (newFilters) => {
+    setFilters(newFilters);
+  };
+
+  const filteredSellers = sellers.filter(seller => {
+    const matchesFilter = (!filters.search || seller.shopName.toLowerCase().includes(filters.search.toLowerCase())) &&
+      (!filters.location || seller.location.toLowerCase().includes(filters.location.toLowerCase()));
+    return matchesFilter;
+  });
+
   return (
     <div className="min-h-screen bg-gray-50">
       <Navigation />
@@ -117,6 +146,21 @@ const Farmers = () => {
             <h1 className="text-2xl font-bold text-gray-900">List of Sellers</h1>
             <p className="text-gray-600">Manage and view all registered farmers and sellers on the platform.</p>
           </div>
+        </div>
+
+        <div className="flex items-center gap-4 mb-8">
+          <Button variant="outline" className="gap-2" onClick={() => setShowFilter(true)}>
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
+            </svg>
+            Filter
+          </Button>
+          <Button className="bg-green-600 hover:bg-green-700 gap-2" onClick={handleCreate}>
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+            </svg>
+            Create Seller
+          </Button>
         </div>
 
         <div className="bg-white rounded-xl shadow-sm border overflow-hidden">
@@ -138,7 +182,7 @@ const Farmers = () => {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {sellers.map((seller) => (
+                {filteredSellers.map((seller) => (
                   <tr key={seller.id} className="hover:bg-gray-50 transition-colors">
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{seller.shopName}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{seller.ownerName}</td>
@@ -157,6 +201,13 @@ const Farmers = () => {
                       {seller.email}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
+                      <Button 
+                        variant="outline" 
+                        size="sm"
+                        onClick={() => handleEdit(seller)}
+                      >
+                        Edit
+                      </Button>
                       <Button 
                         variant="outline" 
                         size="sm"
@@ -193,6 +244,20 @@ const Farmers = () => {
           setShowContact(false);
           setContactInfo(null);
         }}
+      />
+
+      <FilterModal 
+        isOpen={showFilter}
+        onClose={() => setShowFilter(false)}
+        onApplyFilter={handleApplyFilter}
+        filterType="Sellers"
+      />
+
+      <SellerFormModal 
+        isOpen={showSellerForm}
+        onClose={() => setShowSellerForm(false)}
+        onSave={handleSaveSeller}
+        seller={editingSeller}
       />
     </div>
   );
