@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -12,10 +13,24 @@ interface OrderFilters {
   location: string;
 }
 
+interface OrderFormData {
+  id: string;
+  type: string;
+  quantity: number;
+  totalPrice: number;
+  location: string;
+  status: string;
+  date: string;
+  estimatedDelivery: string;
+  trackingId: string;
+}
+
 const TrackOrders = () => {
   const [showTracking, setShowTracking] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [showFilter, setShowFilter] = useState(false);
+  const [showOrderForm, setShowOrderForm] = useState(false);
+  const [editingOrder, setEditingOrder] = useState<OrderFormData | null>(null);
   const [filters, setFilters] = useState<OrderFilters>({
     search: '',
     category: '',
@@ -264,6 +279,16 @@ const TrackOrders = () => {
     setShowTracking(true);
   };
 
+  const handleEdit = (order) => {
+    setEditingOrder(order);
+    setShowOrderForm(true);
+  };
+
+  const handleCreate = () => {
+    setEditingOrder(null);
+    setShowOrderForm(true);
+  };
+
   const handleApplyFilter = (newFilters: OrderFilters) => {
     setFilters(newFilters);
   };
@@ -299,7 +324,7 @@ const TrackOrders = () => {
             </svg>
             Filter Orders
           </Button>
-          <Button className="bg-green-600 hover:bg-green-700 gap-2">
+          <Button className="bg-green-600 hover:bg-green-700 gap-2" onClick={handleCreate}>
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
             </svg>
@@ -342,7 +367,7 @@ const TrackOrders = () => {
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{order.quantity}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">৳{order.totalPrice}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 flex items-center">
-                      <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-4 h-4 mr-1 text-red-500" fill="currentColor" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                       </svg>
                       {order.location}
@@ -351,14 +376,23 @@ const TrackOrders = () => {
                       <Button 
                         variant="outline" 
                         size="sm"
+                        onClick={() => handleEdit(order)}
+                        className="gap-1"
                       >
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                        </svg>
                         Edit
                       </Button>
                       <Button 
                         variant="outline" 
                         size="sm"
                         onClick={() => handleTrack(order)}
+                        className="gap-1"
                       >
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
                         Track
                       </Button>
                     </td>

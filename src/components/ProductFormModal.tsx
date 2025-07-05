@@ -6,11 +6,13 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 
 const ProductFormModal = ({ isOpen, onClose, onSave, product = null }) => {
   const [formData, setFormData] = useState({
+    id: '',
     name: '',
     price: '',
     quantity: '',
     shopName: '',
     location: '',
+    status: 'available',
     description: '',
     farmDetails: '',
     harvestDate: ''
@@ -19,28 +21,41 @@ const ProductFormModal = ({ isOpen, onClose, onSave, product = null }) => {
   useEffect(() => {
     if (product) {
       setFormData({
+        id: product.id || '',
         name: product.name || '',
         price: product.price || '',
         quantity: product.quantity || '',
         shopName: product.shopName || '',
         location: product.location || '',
+        status: product.status || 'available',
         description: product.description || '',
         farmDetails: product.farmDetails || '',
         harvestDate: product.harvestDate || ''
       });
     } else {
       setFormData({
+        id: `P${String(Date.now()).slice(-3)}`,
         name: '',
         price: '',
         quantity: '',
         shopName: '',
         location: '',
+        status: 'available',
         description: '',
         farmDetails: '',
         harvestDate: ''
       });
     }
   }, [product, isOpen]);
+
+  useEffect(() => {
+    // Auto set status based on quantity
+    if (parseInt(formData.quantity) === 0) {
+      setFormData(prev => ({ ...prev, status: 'stock-out' }));
+    } else if (parseInt(formData.quantity) > 0 && formData.status === 'stock-out') {
+      setFormData(prev => ({ ...prev, status: 'available' }));
+    }
+  }, [formData.quantity]);
 
   if (!isOpen) return null;
 
@@ -65,6 +80,15 @@ const ProductFormModal = ({ isOpen, onClose, onSave, product = null }) => {
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Product ID</label>
+            <Input
+              value={formData.id}
+              readOnly
+              className="bg-gray-100"
+            />
+          </div>
+
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Product Name</label>
             <Input
@@ -93,6 +117,23 @@ const ProductFormModal = ({ isOpen, onClose, onSave, product = null }) => {
                 required
               />
             </div>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Status</label>
+            <Select 
+              value={formData.status} 
+              onValueChange={(value) => setFormData({ ...formData, status: value })}
+              disabled={parseInt(formData.quantity) === 0}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Select status" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="available">Available</SelectItem>
+                <SelectItem value="stock-out">Stock Out</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
 
           <div>

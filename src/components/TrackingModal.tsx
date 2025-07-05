@@ -16,36 +16,36 @@ const TrackingModal = ({ isOpen, onClose, currentStatus = 'shipped' }) => {
     {
       status: 'Confirmation Pending',
       statusKey: 'confirmation-pending',
-      details: 'Seller: Green Valley Farm',
-      time: '9:00 AM',
+      details: "John's Store",
+      time: 'Request send: 11:30 AM, Nov 18',
       description: 'Request accepted'
     },
     {
       status: 'Waiting for Transport',
       statusKey: 'waiting-for-transport',
-      details: 'Transport: Swift Logistics',
-      time: '10:20 AM',
+      details: 'Fast Express',
+      time: 'Request send: 12:00 PM, Nov 18',
       description: 'Transport reached'
     },
     {
       status: 'Shipped',
       statusKey: 'shipped',
-      details: 'Destination: Dhaka, Bangladesh',
-      time: '12:15 PM',
+      details: 'Los Angeles, CA',
+      time: 'Shipped complete time: 2:00 PM, Nov 18',
       description: 'Shipped'
     },
     {
       status: 'On the way',
       statusKey: 'on-the-way',
-      details: 'Estimated time',
-      time: '2:30 PM',
+      details: 'Estimated time to reach',
+      time: '4:15 PM, Nov 18',
       description: 'On the way'
     },
     {
       status: 'Delivered',
       statusKey: 'delivered',
       details: 'Delivered time',
-      time: '3:10 PM',
+      time: '',
       description: 'Delivered'
     }
   ];
@@ -62,19 +62,26 @@ const TrackingModal = ({ isOpen, onClose, currentStatus = 'shipped' }) => {
         return {
           circle: 'w-8 h-8 bg-green-500 border-2 border-green-500',
           line: 'bg-green-500',
-          text: 'text-gray-900'
+          text: 'text-gray-900',
+          icon: (
+            <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+            </svg>
+          )
         };
       case 'current':
         return {
           circle: 'w-8 h-8 bg-yellow-400 border-2 border-yellow-400',
-          line: 'bg-gray-300',
-          text: 'text-gray-900'
+          line: 'bg-green-500',
+          text: 'text-gray-900',
+          icon: <div className="w-3 h-3 bg-white rounded-full"></div>
         };
       case 'pending':
         return {
           circle: 'w-8 h-8 bg-white border-2 border-green-500',
           line: 'bg-gray-300',
-          text: 'text-gray-500'
+          text: 'text-gray-500',
+          icon: null
         };
     }
   };
@@ -84,7 +91,7 @@ const TrackingModal = ({ isOpen, onClose, currentStatus = 'shipped' }) => {
       <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full max-h-[90vh] overflow-y-auto">
         <div className="p-6 border-b border-gray-200">
           <div className="flex items-center justify-between">
-            <h2 className="text-2xl font-bold text-gray-900">Tracking</h2>
+            <h2 className="text-2xl font-bold text-gray-900">Track Order</h2>
             <Button variant="ghost" size="sm" onClick={onClose} className="rounded-full">
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -93,48 +100,29 @@ const TrackingModal = ({ isOpen, onClose, currentStatus = 'shipped' }) => {
           </div>
         </div>
 
-        {/* Order Summary */}
-        <div className="p-6 border-b border-gray-200 bg-gray-50">
-          <h3 className="font-semibold text-gray-900 mb-2">Order Summary</h3>
-          <div className="text-sm text-gray-600 space-y-1">
-            <p><strong>Order ID:</strong> #ORD{Math.floor(Math.random() * 10000).toString().padStart(4, '0')}</p>
-            <p><strong>Product:</strong> Rice (100 kg)</p>
-            <p><strong>Total:</strong> ৳4,500</p>
-            <p><strong>Delivery Address:</strong> Dhaka, Bangladesh</p>
-          </div>
-        </div>
-
         <div className="p-6">
-          <div className="relative space-y-6">
+          <div className="relative">
             {trackingSteps.map((step, index) => {
               const stepStatus = getStepStatus(index);
               const styles = getStepStyles(stepStatus);
               
               return (
                 <div key={index} className="flex items-start space-x-4 relative">
-                  <div className="flex flex-col items-center">
+                  <div className="flex flex-col items-center relative">
                     <div className={`${styles.circle} rounded-full flex items-center justify-center relative z-10`}>
-                      {stepStatus === 'completed' ? (
-                        <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                        </svg>
-                      ) : stepStatus === 'current' ? (
-                        <div className="w-3 h-3 bg-white rounded-full"></div>
-                      ) : (
-                        <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                      )}
+                      {styles.icon}
                     </div>
                     {index < trackingSteps.length - 1 && (
-                      <div className={`w-0.5 h-12 ${styles.line} absolute top-8`}></div>
+                      <div className={`w-0.5 h-16 ${styles.line} absolute top-8 z-0`}></div>
                     )}
                   </div>
                   
                   <div className="flex-1 pb-8">
-                    <h3 className={`font-semibold ${styles.text}`}>
+                    <h3 className={`font-semibold text-lg ${styles.text}`}>
                       {step.status}
                     </h3>
-                    <p className="text-sm text-gray-600 mt-1">{step.details}</p>
-                    <p className="text-sm text-gray-500 mt-1">{step.description}: {step.time}</p>
+                    <p className="text-gray-600 mt-1 font-medium">{step.details}</p>
+                    <p className="text-sm text-gray-500 mt-1">{step.time}</p>
                   </div>
                 </div>
               );
