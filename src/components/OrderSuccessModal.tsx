@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 
-const OrderSuccessModal = ({ isOpen, onClose }) => {
+const OrderSuccessModal = ({ isOpen, onClose, onTrackOrder }) => {
   useEffect(() => {
     if (isOpen) {
       const timer = setTimeout(() => {
@@ -41,7 +41,7 @@ const OrderSuccessModal = ({ isOpen, onClose }) => {
           <Button variant="outline" onClick={onClose} className="flex-1">
             Continue Shopping
           </Button>
-          <Button onClick={() => window.location.href = '/track-orders'} className="flex-1 bg-green-600 hover:bg-green-700">
+          <Button onClick={onTrackOrder} className="flex-1 bg-green-600 hover:bg-green-700">
             Track Order
           </Button>
         </div>

@@ -6,11 +6,13 @@ import { Badge } from "@/components/ui/badge";
 import Navigation from "@/components/Navigation";
 import ProductDetailsModal from "@/components/ProductDetailsModal";
 import OrderSuccessModal from "@/components/OrderSuccessModal";
+import TrackingModal from "@/components/TrackingModal";
 
 const Products = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [showOrderSuccess, setShowOrderSuccess] = useState(false);
+  const [showTracking, setShowTracking] = useState(false);
 
   const products = [
     {
@@ -91,6 +93,11 @@ const Products = () => {
     setShowOrderSuccess(true);
   };
 
+  const handleTrackOrder = () => {
+    setShowOrderSuccess(false);
+    setShowTracking(true);
+  };
+
   const filteredProducts = products.filter(product =>
     product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     product.shopName.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -145,7 +152,7 @@ const Products = () => {
                 <tr>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Product ID</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Product Name</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price (₹/kg)</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price (৳/kg)</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Quantity (kg)</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Shop Name</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Location</th>
@@ -158,7 +165,7 @@ const Products = () => {
                   <tr key={product.id} className="hover:bg-gray-50 transition-colors">
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{product.id}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{product.name}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">₹{product.price}</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">৳{product.price}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{product.quantity}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{product.shopName}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 flex items-center">
@@ -194,6 +201,12 @@ const Products = () => {
       <OrderSuccessModal 
         isOpen={showOrderSuccess}
         onClose={() => setShowOrderSuccess(false)}
+        onTrackOrder={handleTrackOrder}
+      />
+
+      <TrackingModal 
+        isOpen={showTracking}
+        onClose={() => setShowTracking(false)}
       />
     </div>
   );

@@ -17,7 +17,7 @@ const Index = () => {
       >
         <div className="text-center text-white px-4 max-w-4xl">
           <h1 className="text-6xl font-bold mb-6 animate-fade-in">
-            Crop Chain System
+            Crops Chain System
           </h1>
           <p className="text-xl mb-4 animate-fade-in">
             From Farm to Consumer at Fair Prices
@@ -30,7 +30,7 @@ const Index = () => {
             <Button className="bg-green-600 hover:bg-green-700 text-lg px-8 py-3">
               Get Started Today
             </Button>
-            <Button variant="outline" className="text-white border-white hover:bg-white hover:text-green-600 text-lg px-8 py-3">
+            <Button variant="outline" className="text-green-600 border-green-600 bg-white hover:bg-green-600 hover:text-white text-lg px-8 py-3">
               Learn More
             </Button>
           </div>

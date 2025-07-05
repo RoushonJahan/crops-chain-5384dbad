@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -58,7 +57,7 @@ const ProductDetailsModal = ({ product, onClose, onConfirm }) => {
                 </div>
                 <div>
                   <span className="text-gray-500">Price per kg:</span>
-                  <p className="font-medium text-green-600">₹{product.price}</p>
+                  <p className="font-medium text-green-600">৳{product.price}</p>
                 </div>
                 <div>
                   <span className="text-gray-500">Available:</span>
@@ -166,11 +165,11 @@ const ProductDetailsModal = ({ product, onClose, onConfirm }) => {
                 </div>
                 <div className="flex justify-between">
                   <span>Price per kg:</span>
-                  <span>₹{product.price}</span>
+                  <span>৳{product.price}</span>
                 </div>
                 <div className="flex justify-between font-semibold text-green-600 text-base border-t pt-2">
                   <span>Total Price:</span>
-                  <span>₹{totalPrice}</span>
+                  <span>৳{totalPrice}</span>
                 </div>
               </div>
             </div>

@@ -3,9 +3,11 @@ import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import Navigation from "@/components/Navigation";
+import TrackingModal from "@/components/TrackingModal";
 
 const TrackOrders = () => {
   const [activeTab, setActiveTab] = useState('active');
+  const [showTracking, setShowTracking] = useState(false);
 
   const orders = [
     {
@@ -23,7 +25,7 @@ const TrackOrders = () => {
       id: 'ORD002',
       type: 'Egg',
       date: 'Mar 1, 2024',
-      status: 'in-progress',
+      status: 'on-the-way',
       quantity: 200,
       totalPrice: 1200,
       location: 'Rajshahi',
@@ -56,7 +58,7 @@ const TrackOrders = () => {
       id: 'ORD005',
       type: 'Potato',
       date: 'Mar 6, 2024',
-      status: 'in-progress',
+      status: 'waiting-for-transport',
       quantity: 3200,
       totalPrice: 5760,
       location: 'Dhaka',
@@ -67,7 +69,7 @@ const TrackOrders = () => {
       id: 'ORD006',
       type: 'Wheat',
       date: 'Mar 8, 2024',
-      status: 'pending',
+      status: 'confirmation-pending',
       quantity: 1500,
       totalPrice: 8250,
       location: 'Chittagong',
@@ -89,7 +91,7 @@ const TrackOrders = () => {
       id: 'ORD008',
       type: 'Tomato',
       date: 'Mar 12, 2024',
-      status: 'processing',
+      status: 'confirmation-pending',
       quantity: 500,
       totalPrice: 1250,
       location: 'Cumilla',
@@ -100,7 +102,7 @@ const TrackOrders = () => {
       id: 'ORD009',
       type: 'Onion',
       date: 'Mar 14, 2024',
-      status: 'in-progress',
+      status: 'waiting-for-transport',
       quantity: 1200,
       totalPrice: 3600,
       location: 'Rangpur',
@@ -111,36 +113,85 @@ const TrackOrders = () => {
       id: 'ORD010',
       type: 'Garlic',
       date: 'Mar 15, 2024',
-      status: 'pending',
+      status: 'confirmation-pending',
       quantity: 300,
       totalPrice: 4500,
       location: 'Khulna',
       estimatedDelivery: 'Mar 18, 2024',
       trackingId: 'TRK010'
+    },
+    {
+      id: 'ORD011',
+      type: 'Spinach',
+      date: 'Mar 16, 2024',
+      status: 'on-the-way',
+      quantity: 150,
+      totalPrice: 750,
+      location: 'Mymensingh',
+      estimatedDelivery: 'Mar 19, 2024',
+      trackingId: 'TRK011'
+    },
+    {
+      id: 'ORD012',
+      type: 'Cabbage',
+      date: 'Mar 17, 2024',
+      status: 'shipped',
+      quantity: 400,
+      totalPrice: 1200,
+      location: 'Jessore',
+      estimatedDelivery: 'Mar 20, 2024',
+      trackingId: 'TRK012'
+    },
+    {
+      id: 'ORD013',
+      type: 'Carrot',
+      date: 'Mar 18, 2024',
+      status: 'waiting-for-transport',
+      quantity: 250,
+      totalPrice: 875,
+      location: 'Faridpur',
+      estimatedDelivery: 'Mar 21, 2024',
+      trackingId: 'TRK013'
+    },
+    {
+      id: 'ORD014',
+      type: 'Cucumber',
+      date: 'Mar 19, 2024',
+      status: 'delivered',
+      quantity: 180,
+      totalPrice: 540,
+      location: 'Pabna',
+      estimatedDelivery: 'Mar 22, 2024',
+      trackingId: 'TRK014'
+    },
+    {
+      id: 'ORD015',
+      type: 'Brinjal',
+      date: 'Mar 20, 2024',
+      status: 'confirmation-pending',
+      quantity: 320,
+      totalPrice: 960,
+      location: 'Narayanganj',
+      estimatedDelivery: 'Mar 23, 2024',
+      trackingId: 'TRK015'
     }
-  ];
-
-  const transportCompanies = [
-    { id: 'TR001', name: 'Azhar Publication', vehicle: 'Truck - 104', type: 'Truck', capacity: '5 tons' },
-    { id: 'TR002', name: 'Bashiron Enterprise', vehicle: 'Pickup - 150', type: 'Pickup', capacity: '1.5 tons' },
-    { id: 'TR003', name: 'Beautiful Publication', vehicle: 'Truck - 302', type: 'Truck', capacity: '8 tons' }
   ];
 
   const getStatusBadge = (status) => {
     const statusConfig = {
       'delivered': { color: 'bg-green-100 text-green-800', text: 'Delivered' },
-      'in-progress': { color: 'bg-yellow-100 text-yellow-800', text: 'In Progress' },
-      'shipped': { color: 'bg-blue-100 text-blue-800', text: 'Shipped' },
-      'pending': { color: 'bg-gray-100 text-gray-800', text: 'Pending' },
-      'processing': { color: 'bg-purple-100 text-purple-800', text: 'Processing' }
+      'on-the-way': { color: 'bg-blue-100 text-blue-800', text: 'On the way' },
+      'shipped': { color: 'bg-purple-100 text-purple-800', text: 'Shipped' },
+      'waiting-for-transport': { color: 'bg-yellow-100 text-yellow-800', text: 'Waiting for Transport' },
+      'confirmation-pending': { color: 'bg-gray-100 text-gray-800', text: 'Confirmation Pending' }
     };
     
-    const config = statusConfig[status] || statusConfig.pending;
+    const config = statusConfig[status] || statusConfig['confirmation-pending'];
     return <Badge className={config.color}>{config.text}</Badge>;
   };
 
   const filteredOrders = activeTab === 'active' 
-    ? orders.filter(order => ['in-progress', 'shipped', 'processing', 'pending'].includes(order.status))
+    ? orders.filter(order => !['delivered'].includes(order.status))
     : orders;
 
   return (
@@ -214,7 +265,7 @@ const TrackOrders = () => {
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{order.date}</td>
                     <td className="px-6 py-4 whitespace-nowrap">{getStatusBadge(order.status)}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{order.quantity}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">₹{order.totalPrice}</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">৳{order.totalPrice}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 flex items-center">
                       <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
@@ -222,7 +273,11 @@ const TrackOrders = () => {
                       {order.location}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                      <Button variant="outline" size="sm">
+                      <Button 
+                        variant="outline" 
+                        size="sm"
+                        onClick={() => setShowTracking(true)}
+                      >
                         Track
                       </Button>
                     </td>
@@ -232,29 +287,12 @@ const TrackOrders = () => {
             </table>
           </div>
         </div>
-
-        <div className="bg-white rounded-xl shadow-sm border overflow-hidden">
-          <div className="p-6 border-b">
-            <h2 className="text-lg font-semibold">List of Available Transports</h2>
-          </div>
-          
-          <div className="grid md:grid-cols-3 gap-6 p-6">
-            {transportCompanies.map((company) => (
-              <div key={company.id} className="border rounded-lg p-4 hover:shadow-md transition-shadow">
-                <h3 className="font-semibold text-gray-900 mb-2">{company.name}</h3>
-                <div className="space-y-2 text-sm text-gray-600">
-                  <p><strong>Vehicle:</strong> {company.vehicle}</p>
-                  <p><strong>Type:</strong> {company.type}</p>
-                  <p><strong>Capacity:</strong> {company.capacity}</p>
-                </div>
-                <Button className="w-full mt-4 bg-green-600 hover:bg-green-700" size="sm">
-                  Select Transport
-                </Button>
-              </div>
-            ))}
-          </div>
-        </div>
       </div>
+
+      <TrackingModal 
+        isOpen={showTracking}
+        onClose={() => setShowTracking(false)}
+      />
     </div>
   );
 };

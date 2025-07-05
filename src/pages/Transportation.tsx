@@ -1,11 +1,14 @@
-
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Navigation from "@/components/Navigation";
+import ContactModal from "@/components/ContactModal";
 
 const Transportation = () => {
+  const [showContact, setShowContact] = useState(false);
+  const [contactInfo, setContactInfo] = useState(null);
+
   const transportCompanies = [
     {
       id: 'TR001',
@@ -92,6 +95,17 @@ const Transportation = () => {
       features: ['Flexible Timing', 'Door to Door', 'Affordable Rates']
     }
   ];
+
+  const handleCallNow = (company) => {
+    setContactInfo({
+      ownerName: company.name,
+      shopName: company.name,
+      phone: company.contact,
+      email: company.email,
+      location: company.coverage
+    });
+    setShowContact(true);
+  };
 
   const getVehicleIcon = (type) => {
     const iconClass = "w-8 h-8";
@@ -230,8 +244,12 @@ const Transportation = () => {
                   <Button variant="outline" className="flex-1" size="sm">
                     View Details
                   </Button>
-                  <Button className="flex-1 bg-green-600 hover:bg-green-700" size="sm">
-                    Book Now
+                  <Button 
+                    className="flex-1 bg-green-600 hover:bg-green-700" 
+                    size="sm"
+                    onClick={() => handleCallNow(company)}
+                  >
+                    Call Now
                   </Button>
                 </div>
               </CardContent>
@@ -239,6 +257,12 @@ const Transportation = () => {
           ))}
         </div>
       </div>
+
+      <ContactModal 
+        isOpen={showContact}
+        contactInfo={contactInfo}
+        onClose={() => setShowContact(false)}
+      />
     </div>
   );
 };
