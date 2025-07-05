@@ -7,6 +7,13 @@ import ContactModal from "@/components/ContactModal";
 import FilterModal from "@/components/FilterModal";
 import SellerFormModal from "@/components/SellerFormModal";
 
+interface BuyerFilters {
+  search: string;
+  category: string;
+  status: string;
+  location: string;
+}
+
 const Buyers = () => {
   const [selectedSeller, setSelectedSeller] = useState(null);
   const [showContact, setShowContact] = useState(false);
@@ -14,7 +21,12 @@ const Buyers = () => {
   const [showFilter, setShowFilter] = useState(false);
   const [showSellerForm, setShowSellerForm] = useState(false);
   const [editingSeller, setEditingSeller] = useState(null);
-  const [filters, setFilters] = useState({});
+  const [filters, setFilters] = useState<BuyerFilters>({
+    search: '',
+    category: '',
+    status: '',
+    location: ''
+  });
 
   const sellers = [
     {
@@ -109,7 +121,7 @@ const Buyers = () => {
     // Here you would typically save to your backend
   };
 
-  const handleApplyFilter = (newFilters) => {
+  const handleApplyFilter = (newFilters: BuyerFilters) => {
     setFilters(newFilters);
   };
 

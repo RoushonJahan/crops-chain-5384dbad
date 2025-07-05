@@ -5,11 +5,23 @@ import Navigation from "@/components/Navigation";
 import TrackingModal from "@/components/TrackingModal";
 import FilterModal from "@/components/FilterModal";
 
+interface OrderFilters {
+  search: string;
+  category: string;
+  status: string;
+  location: string;
+}
+
 const TrackOrders = () => {
   const [showTracking, setShowTracking] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [showFilter, setShowFilter] = useState(false);
-  const [filters, setFilters] = useState({});
+  const [filters, setFilters] = useState<OrderFilters>({
+    search: '',
+    category: '',
+    status: '',
+    location: ''
+  });
 
   const orders = [
     {
@@ -252,7 +264,7 @@ const TrackOrders = () => {
     setShowTracking(true);
   };
 
-  const handleApplyFilter = (newFilters) => {
+  const handleApplyFilter = (newFilters: OrderFilters) => {
     setFilters(newFilters);
   };
 

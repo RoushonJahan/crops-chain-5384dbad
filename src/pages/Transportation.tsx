@@ -6,11 +6,23 @@ import Navigation from "@/components/Navigation";
 import ContactModal from "@/components/ContactModal";
 import FilterModal from "@/components/FilterModal";
 
+interface TransportFilters {
+  search: string;
+  category: string;
+  status: string;
+  location: string;
+}
+
 const Transportation = () => {
   const [showContact, setShowContact] = useState(false);
   const [contactInfo, setContactInfo] = useState(null);
   const [showFilter, setShowFilter] = useState(false);
-  const [filters, setFilters] = useState({});
+  const [filters, setFilters] = useState<TransportFilters>({
+    search: '',
+    category: '',
+    status: '',
+    location: ''
+  });
 
   const transportCompanies = [
     {
@@ -104,7 +116,7 @@ const Transportation = () => {
     setShowContact(true);
   };
 
-  const handleApplyFilter = (newFilters) => {
+  const handleApplyFilter = (newFilters: TransportFilters) => {
     setFilters(newFilters);
   };
 

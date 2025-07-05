@@ -4,7 +4,14 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
-const FilterModal = ({ isOpen, onClose, onApplyFilter, filterType }) => {
+interface FilterModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  onApplyFilter: (filters: any) => void;
+  filterType: string;
+}
+
+const FilterModal: React.FC<FilterModalProps> = ({ isOpen, onClose, onApplyFilter, filterType }) => {
   const [filters, setFilters] = useState({
     search: '',
     category: '',

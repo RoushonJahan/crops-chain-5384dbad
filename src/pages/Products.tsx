@@ -9,6 +9,13 @@ import TrackingModal from "@/components/TrackingModal";
 import FilterModal from "@/components/FilterModal";
 import ProductFormModal from "@/components/ProductFormModal";
 
+interface ProductFilters {
+  search: string;
+  category: string;
+  status: string;
+  location: string;
+}
+
 const Products = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -17,7 +24,12 @@ const Products = () => {
   const [showFilter, setShowFilter] = useState(false);
   const [showProductForm, setShowProductForm] = useState(false);
   const [editingProduct, setEditingProduct] = useState(null);
-  const [filters, setFilters] = useState({});
+  const [filters, setFilters] = useState<ProductFilters>({
+    search: '',
+    category: '',
+    status: '',
+    location: ''
+  });
 
   const products = [
     {
@@ -118,7 +130,7 @@ const Products = () => {
     // Here you would typically save to your backend
   };
 
-  const handleApplyFilter = (newFilters) => {
+  const handleApplyFilter = (newFilters: ProductFilters) => {
     setFilters(newFilters);
   };
 

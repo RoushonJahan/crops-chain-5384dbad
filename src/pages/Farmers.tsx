@@ -7,6 +7,13 @@ import ContactModal from "@/components/ContactModal";
 import FilterModal from "@/components/FilterModal";
 import SellerFormModal from "@/components/SellerFormModal";
 
+interface FarmerFilters {
+  search: string;
+  category: string;
+  status: string;
+  location: string;
+}
+
 const Farmers = () => {
   const [selectedSeller, setSelectedSeller] = useState(null);
   const [showContact, setShowContact] = useState(false);
@@ -14,7 +21,12 @@ const Farmers = () => {
   const [showFilter, setShowFilter] = useState(false);
   const [showSellerForm, setShowSellerForm] = useState(false);
   const [editingSeller, setEditingSeller] = useState(null);
-  const [filters, setFilters] = useState({});
+  const [filters, setFilters] = useState<FarmerFilters>({
+    search: '',
+    category: '',
+    status: '',
+    location: ''
+  });
 
   const sellers = [
     {
@@ -121,7 +133,7 @@ const Farmers = () => {
     console.log('Saving seller:', sellerData);
   };
 
-  const handleApplyFilter = (newFilters) => {
+  const handleApplyFilter = (newFilters: FarmerFilters) => {
     setFilters(newFilters);
   };
 
