@@ -7,6 +7,7 @@ import SellerDetailsModal from "@/components/SellerDetailsModal";
 import ContactModal from "@/components/ContactModal";
 import FilterModal from "@/components/FilterModal";
 import SellerFormModal from "@/components/SellerFormModal";
+import { MapPin, Edit, Eye, Phone, Plus, Filter } from "lucide-react";
 
 interface BuyerFilters {
   search: string;
@@ -151,15 +152,11 @@ const Buyers = () => {
 
         <div className="flex items-center gap-4 mb-8">
           <Button variant="outline" className="gap-2" onClick={() => setShowFilter(true)}>
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
-            </svg>
+            <Filter className="w-4 h-4" />
             Filter
           </Button>
           <Button className="bg-green-600 hover:bg-green-700 gap-2" onClick={handleCreate}>
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-            </svg>
+            <Plus className="w-4 h-4" />
             Create Seller
           </Button>
         </div>
@@ -189,10 +186,7 @@ const Buyers = () => {
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{seller.ownerName}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{seller.phone}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 flex items-center">
-                      <svg className="w-4 h-4 mr-1 text-red-500" fill="currentColor" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                      </svg>
+                      <MapPin className="w-4 h-4 mr-1 text-red-500" />
                       {seller.location}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
@@ -202,9 +196,7 @@ const Buyers = () => {
                         onClick={() => handleEdit(seller)}
                         className="gap-1"
                       >
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                        </svg>
+                        <Edit className="w-3 h-3" />
                         Edit
                       </Button>
                       <Button 
@@ -213,10 +205,7 @@ const Buyers = () => {
                         onClick={() => handleViewSeller(seller)}
                         className="gap-1"
                       >
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                        </svg>
+                        <Eye className="w-3 h-3" />
                         View
                       </Button>
                       <Button 
@@ -224,9 +213,7 @@ const Buyers = () => {
                         className="bg-green-600 hover:bg-green-700 gap-1"
                         onClick={() => handleContact(seller)}
                       >
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                        </svg>
+                        <Phone className="w-3 h-3" />
                         Contact
                       </Button>
                     </td>

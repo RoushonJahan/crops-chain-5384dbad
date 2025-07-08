@@ -2,6 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import Navigation from "@/components/Navigation";
+import farmFieldImage from "@/assets/farm-field.jpg";
 
 const Index = () => {
   return (
@@ -12,7 +13,7 @@ const Index = () => {
       <div 
         className="relative min-h-[80vh] flex items-center justify-center bg-cover bg-center"
         style={{
-          backgroundImage: 'linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url("https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80")'
+          backgroundImage: `linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(${farmFieldImage})`
         }}
       >
         <div className="text-center text-white px-4 max-w-4xl">

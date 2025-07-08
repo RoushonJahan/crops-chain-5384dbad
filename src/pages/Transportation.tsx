@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Navigation from "@/components/Navigation";
 import ContactModal from "@/components/ContactModal";
 import FilterModal from "@/components/FilterModal";
+import { Edit, Phone, Plus, Filter } from "lucide-react";
 
 interface TransportFilters {
   search: string;
@@ -177,15 +178,11 @@ const Transportation = () => {
 
         <div className="flex items-center gap-4 mb-8">
           <Button variant="outline" className="gap-2" onClick={() => setShowFilter(true)}>
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
-            </svg>
+            <Filter className="w-4 h-4" />
             Filter
           </Button>
           <Button className="bg-green-600 hover:bg-green-700 gap-2">
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-            </svg>
+            <Plus className="w-4 h-4" />
             Create Transport
           </Button>
         </div>
@@ -259,17 +256,19 @@ const Transportation = () => {
                 </div>
 
                 <div className="flex gap-2 pt-4">
-                  <Button variant="outline" className="flex-1" size="sm">
+                  <Button variant="outline" className="flex-1 gap-1" size="sm">
+                    <Edit className="w-3 h-3" />
                     Edit
                   </Button>
                   <Button variant="outline" className="flex-1" size="sm">
                     View Details
                   </Button>
                   <Button 
-                    className="flex-1 bg-green-600 hover:bg-green-700" 
+                    className="flex-1 bg-green-600 hover:bg-green-700 gap-1" 
                     size="sm"
                     onClick={() => handleCallNow(company)}
                   >
+                    <Phone className="w-3 h-3" />
                     Call Now
                   </Button>
                 </div>

@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 const Navigation = () => {
   return (
@@ -14,13 +15,14 @@ const Navigation = () => {
         </div>
         
         <div className="hidden md:flex items-center space-x-8">
-          <a href="/" className="text-gray-600 hover:text-green-600 transition-colors">Home</a>
-          <a href="/products" className="text-gray-600 hover:text-green-600 transition-colors">Products</a>
-          <a href="/farmers" className="text-gray-600 hover:text-green-600 transition-colors">For Farmers</a>
-          <a href="/buyers" className="text-gray-600 hover:text-green-600 transition-colors">For Buyers</a>
-          <a href="/track-orders" className="text-gray-600 hover:text-green-600 transition-colors">Track Orders</a>
-          <a href="/transportation" className="text-gray-600 hover:text-green-600 transition-colors">Transportation</a>
-          <a href="/about" className="text-gray-600 hover:text-green-600 transition-colors">About</a>
+          <Link to="/" className="text-gray-600 hover:text-green-600 transition-colors">Home</Link>
+          <Link to="/products" className="text-gray-600 hover:text-green-600 transition-colors">Products</Link>
+          <Link to="/farmers" className="text-gray-600 hover:text-green-600 transition-colors">For Farmers</Link>
+          <Link to="/buyers" className="text-gray-600 hover:text-green-600 transition-colors">For Buyers</Link>
+          <Link to="/track-orders" className="text-gray-600 hover:text-green-600 transition-colors">Track Orders</Link>
+          <Link to="/transportation" className="text-gray-600 hover:text-green-600 transition-colors">Transportation</Link>
+          <Link to="/purchase-history" className="text-gray-600 hover:text-green-600 transition-colors">Purchase History</Link>
+          <Link to="/about" className="text-gray-600 hover:text-green-600 transition-colors">About</Link>
         </div>
 
         <div className="flex items-center space-x-4">

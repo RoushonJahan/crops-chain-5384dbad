@@ -9,6 +9,7 @@ import OrderSuccessModal from "@/components/OrderSuccessModal";
 import TrackingModal from "@/components/TrackingModal";
 import FilterModal from "@/components/FilterModal";
 import ProductFormModal from "@/components/ProductFormModal";
+import { MapPin, Edit, ShoppingCart, Plus, Filter } from "lucide-react";
 
 interface ProductFilters {
   search: string;
@@ -177,15 +178,11 @@ const Products = () => {
             />
           </div>
           <Button variant="outline" className="gap-2" onClick={() => setShowFilter(true)}>
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
-            </svg>
+            <Filter className="w-4 h-4" />
             Filter
           </Button>
           <Button className="bg-green-600 hover:bg-green-700 gap-2" onClick={handleCreate}>
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-            </svg>
+            <Plus className="w-4 h-4" />
             Create Product
           </Button>
         </div>
@@ -218,10 +215,7 @@ const Products = () => {
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{product.quantity}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{product.shopName}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 flex items-center">
-                      <svg className="w-4 h-4 mr-1 text-red-500" fill="currentColor" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                      </svg>
+                      <MapPin className="w-4 h-4 mr-1 text-red-500" />
                       {product.location}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">{getStatusBadge(product.status, product.quantity)}</td>
@@ -232,9 +226,7 @@ const Products = () => {
                         onClick={() => handleEdit(product)}
                         className="gap-1"
                       >
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                        </svg>
+                        <Edit className="w-3 h-3" />
                         Edit
                       </Button>
                       <Button 
@@ -242,9 +234,7 @@ const Products = () => {
                         size="sm"
                         onClick={() => handleOrderNow(product)}
                       >
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5 5M7 13h0m8 0a2 2 0 104 0 2 2 0 00-4 0zm-8 0a2 2 0 104 0 2 2 0 00-4 0z" />
-                        </svg>
+                        <ShoppingCart className="w-3 h-3" />
                         Order Now
                       </Button>
                     </td>
