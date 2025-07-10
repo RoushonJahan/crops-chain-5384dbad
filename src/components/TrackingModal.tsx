@@ -2,7 +2,7 @@
 import React from 'react';
 import { Button } from "@/components/ui/button";
 
-const TrackingModal = ({ isOpen, onClose, currentStatus = 'shipped' }) => {
+const TrackingModal = ({ isOpen, onClose, currentStatus = 'shipped', orderData = null }) => {
   if (!isOpen) return null;
 
   const getStatusIndex = (status) => {
@@ -101,6 +101,39 @@ const TrackingModal = ({ isOpen, onClose, currentStatus = 'shipped' }) => {
         </div>
 
         <div className="p-6">
+          {/* Order Details Section */}
+          {orderData && (
+            <div className="mb-6 p-4 bg-gray-50 rounded-lg">
+              <h3 className="font-semibold text-gray-900 mb-3">Order Details</h3>
+              <div className="grid grid-cols-2 gap-3 text-sm">
+                <div>
+                  <span className="text-gray-500">Order ID:</span>
+                  <span className="ml-2 font-medium">{orderData.id}</span>
+                </div>
+                <div>
+                  <span className="text-gray-500">Product:</span>
+                  <span className="ml-2 font-medium">{orderData.type}</span>
+                </div>
+                <div>
+                  <span className="text-gray-500">Quantity:</span>
+                  <span className="ml-2 font-medium">{orderData.quantity}</span>
+                </div>
+                <div>
+                  <span className="text-gray-500">Total Price:</span>
+                  <span className="ml-2 font-medium">৳{orderData.totalPrice}</span>
+                </div>
+                <div>
+                  <span className="text-gray-500">Location:</span>
+                  <span className="ml-2 font-medium">{orderData.location}</span>
+                </div>
+                <div>
+                  <span className="text-gray-500">Expected Delivery:</span>
+                  <span className="ml-2 font-medium">{orderData.estimatedDelivery}</span>
+                </div>
+              </div>
+            </div>
+          )}
+          
           <div className="relative">
             {trackingSteps.map((step, index) => {
               const stepStatus = getStepStatus(index);

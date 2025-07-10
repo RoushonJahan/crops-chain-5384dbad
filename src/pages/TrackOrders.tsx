@@ -323,10 +323,6 @@ const TrackOrders = () => {
             <Filter className="w-4 h-4" />
             Filter Orders
           </Button>
-          <Button className="bg-green-600 hover:bg-green-700 gap-2" onClick={handleCreate}>
-            <Plus className="w-4 h-4" />
-            Create Order
-          </Button>
         </div>
 
         <div className="bg-white rounded-xl shadow-sm border overflow-hidden mb-8">
@@ -367,16 +363,7 @@ const TrackOrders = () => {
                       <MapPin className="w-4 h-4 mr-1 text-red-500" />
                       {order.location}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
-                      <Button 
-                        variant="outline" 
-                        size="sm"
-                        onClick={() => handleEdit(order)}
-                        className="gap-1"
-                      >
-                        <Edit className="w-3 h-3" />
-                        Edit
-                      </Button>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                       <Button 
                         size="sm" 
                         className="bg-green-600 hover:bg-green-700 gap-1"
@@ -398,6 +385,7 @@ const TrackOrders = () => {
         isOpen={showTracking}
         onClose={() => setShowTracking(false)}
         currentStatus={selectedOrder?.status}
+        orderData={selectedOrder}
       />
 
       <FilterModal 
