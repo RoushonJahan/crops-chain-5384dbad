@@ -5,7 +5,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Navigation from "@/components/Navigation";
 import ContactModal from "@/components/ContactModal";
 import FilterModal from "@/components/FilterModal";
-import { Edit, Phone, Plus, Filter } from "lucide-react";
+import TransportFormModal from "@/components/TransportFormModal";
+import TransportDetailsModal from "@/components/TransportDetailsModal";
+import { Edit, Phone, Plus, Filter, Eye } from "lucide-react";
 
 interface TransportFilters {
   search: string;
@@ -18,6 +20,10 @@ const Transportation = () => {
   const [showContact, setShowContact] = useState(false);
   const [contactInfo, setContactInfo] = useState(null);
   const [showFilter, setShowFilter] = useState(false);
+  const [showTransportForm, setShowTransportForm] = useState(false);
+  const [showTransportDetails, setShowTransportDetails] = useState(false);
+  const [selectedTransport, setSelectedTransport] = useState(null);
+  const [formMode, setFormMode] = useState<'create' | 'edit'>('create');
   const [filters, setFilters] = useState<TransportFilters>({
     search: '',
     category: '',
@@ -121,6 +127,23 @@ const Transportation = () => {
     setFilters(newFilters);
   };
 
+  const handleCreateTransport = () => {
+    setFormMode('create');
+    setSelectedTransport(null);
+    setShowTransportForm(true);
+  };
+
+  const handleEditTransport = (transport: any) => {
+    setFormMode('edit');
+    setSelectedTransport(transport);
+    setShowTransportForm(true);
+  };
+
+  const handleViewDetails = (transport: any) => {
+    setSelectedTransport(transport);
+    setShowTransportDetails(true);
+  };
+
   const filteredCompanies = transportCompanies.filter(company => {
     const matchesFilter = (!filters.search || company.name.toLowerCase().includes(filters.search.toLowerCase())) &&
       (!filters.location || company.coverage.toLowerCase().includes(filters.location.toLowerCase()));
@@ -181,7 +204,7 @@ const Transportation = () => {
             <Filter className="w-4 h-4" />
             Filter
           </Button>
-          <Button className="bg-green-600 hover:bg-green-700 gap-2">
+          <Button className="bg-green-600 hover:bg-green-700 gap-2" onClick={handleCreateTransport}>
             <Plus className="w-4 h-4" />
             Create Transport
           </Button>
@@ -256,11 +279,22 @@ const Transportation = () => {
                 </div>
 
                 <div className="flex gap-2 pt-4">
-                  <Button variant="outline" className="flex-1 gap-1" size="sm">
+                  <Button 
+                    variant="outline" 
+                    className="flex-1 gap-1" 
+                    size="sm"
+                    onClick={() => handleEditTransport(company)}
+                  >
                     <Edit className="w-3 h-3" />
                     Edit
                   </Button>
-                  <Button variant="outline" className="flex-1" size="sm">
+                  <Button 
+                    variant="outline" 
+                    className="flex-1 gap-1" 
+                    size="sm"
+                    onClick={() => handleViewDetails(company)}
+                  >
+                    <Eye className="w-3 h-3" />
                     View Details
                   </Button>
                   <Button 
@@ -289,6 +323,19 @@ const Transportation = () => {
         onClose={() => setShowFilter(false)}
         onApplyFilter={handleApplyFilter}
         filterType="Transportation"
+      />
+
+      <TransportFormModal
+        isOpen={showTransportForm}
+        onClose={() => setShowTransportForm(false)}
+        transportData={selectedTransport}
+        mode={formMode}
+      />
+
+      <TransportDetailsModal
+        isOpen={showTransportDetails}
+        onClose={() => setShowTransportDetails(false)}
+        transportData={selectedTransport}
       />
     </div>
   );
