@@ -34,6 +34,7 @@ const PurchaseHistory = () => {
       buyerName: 'Abdul Karim',
       transportationName: 'Swift Logistics',
       destinationAddress: 'Dhaka, Bangladesh',
+      transactionType: 'bKash',
       deliveryDate: '2024-02-20',
       deliveryTime: '3:00 PM'
     },
@@ -48,6 +49,7 @@ const PurchaseHistory = () => {
       buyerName: 'Fatima Khatun',
       transportationName: 'Fast Express',
       destinationAddress: 'Chittagong, Bangladesh',
+      transactionType: 'Nagad',
       deliveryDate: '2024-03-01',
       deliveryTime: '2:30 PM'
     },
@@ -62,6 +64,7 @@ const PurchaseHistory = () => {
       buyerName: 'Mohammad Ali',
       transportationName: 'Metro Transport',
       destinationAddress: 'Sylhet, Bangladesh',
+      transactionType: 'Rocket',
       deliveryDate: '2024-03-05',
       deliveryTime: '1:45 PM'
     },
@@ -76,6 +79,7 @@ const PurchaseHistory = () => {
       buyerName: 'Aminul Islam',
       transportationName: 'Quick Delivery',
       destinationAddress: 'Rangpur, Bangladesh',
+      transactionType: 'Bank',
       deliveryDate: '2024-03-08',
       deliveryTime: '4:15 PM'
     },
@@ -90,10 +94,21 @@ const PurchaseHistory = () => {
       buyerName: 'Salma Khatun',
       transportationName: 'Express Cargo',
       destinationAddress: 'Khulna, Bangladesh',
+      transactionType: 'bKash',
       deliveryDate: '2024-03-12',
       deliveryTime: '11:30 AM'
     }
   ];
+
+  const getTransactionBadge = (type) => {
+    const colors = {
+      'bKash': 'bg-pink-100 text-pink-800',
+      'Nagad': 'bg-orange-100 text-orange-800',
+      'Rocket': 'bg-purple-100 text-purple-800',
+      'Bank': 'bg-blue-100 text-blue-800'
+    };
+    return <Badge className={colors[type] || 'bg-gray-100 text-gray-800'}>{type}</Badge>;
+  };
 
   const handleApplyFilter = (newFilters: PurchaseFilters) => {
     setFilters(newFilters);
@@ -149,6 +164,7 @@ const PurchaseHistory = () => {
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Item</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Quantity</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total Price</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Transaction Type</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Buyer Name</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Transport</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Destination</th>
@@ -168,6 +184,7 @@ const PurchaseHistory = () => {
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{purchase.item}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{purchase.quantity} kg</td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">৳{purchase.totalPrice}</td>
+                    <td className="px-6 py-4 whitespace-nowrap">{getTransactionBadge(purchase.transactionType)}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{purchase.buyerName}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{purchase.transportationName}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 flex items-center">

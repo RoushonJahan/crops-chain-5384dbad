@@ -36,8 +36,7 @@ const Farmers = () => {
       ownerName: 'Kazi Hassan',
       phone: '+8801712346881',
       email: 'dhakaelectronics@gmail.com',
-      transactionType: 'Nagad',
-      transactionId: 'TXN1601',
+      transactionType: 'bKash',
       location: 'Dhaka',
       products: ['Rice', 'Wheat', 'Electronics'],
       rating: 4.8,
@@ -50,8 +49,7 @@ const Farmers = () => {
       ownerName: 'Rafiqul Alam',
       phone: '+8801712346872',
       email: 'chittagongtrading@gmail.com',
-      transactionType: 'bKash',
-      transactionId: 'TXN1602',
+      transactionType: 'Nagad',
       location: 'Chittagong',
       products: ['Vegetables', 'Fruits', 'Grains'],
       rating: 4.6,
@@ -64,8 +62,7 @@ const Farmers = () => {
       ownerName: 'Mahfuz Ullah',
       phone: '+8801712346873',
       email: 'sylhetsupermart@gmail.com',
-      transactionType: 'Nagad',
-      transactionId: 'TXN1603',
+      transactionType: 'Rocket',
       location: 'Sylhet',
       products: ['Tea', 'Spices', 'Organic Products'],
       rating: 4.9,
@@ -78,8 +75,7 @@ const Farmers = () => {
       ownerName: 'Jamal Hossain',
       phone: '+8801712346874',
       email: 'rajshahihub@gmail.com',
-      transactionType: 'bKash',
-      transactionId: 'TXN1604',
+      transactionType: 'Bank',
       location: 'Rajshahi',
       products: ['Mango', 'Silk', 'Handicrafts'],
       rating: 4.7,
@@ -92,8 +88,7 @@ const Farmers = () => {
       ownerName: 'Rafiqul Rahman',
       phone: '+8801712346875',
       email: 'khulnawholesale@gmail.com',
-      transactionType: 'Nagad',
-      transactionId: 'TXN1605',
+      transactionType: 'bKash',
       location: 'Khulna',
       products: ['Shrimp', 'Fish', 'Seafood'],
       rating: 4.5,
@@ -104,8 +99,10 @@ const Farmers = () => {
 
   const getTransactionBadge = (type) => {
     const colors = {
+      'bKash': 'bg-pink-100 text-pink-800',
       'Nagad': 'bg-orange-100 text-orange-800',
-      'bKash': 'bg-pink-100 text-pink-800'
+      'Rocket': 'bg-purple-100 text-purple-800',
+      'Bank': 'bg-blue-100 text-blue-800'
     };
     return <Badge className={colors[type] || 'bg-gray-100 text-gray-800'}>{type}</Badge>;
   };
@@ -185,7 +182,6 @@ const Farmers = () => {
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Owner Name</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Phone Number</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Transaction Type</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Transaction ID</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                 </tr>
@@ -202,7 +198,6 @@ const Farmers = () => {
                       {seller.phone}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">{getTransactionBadge(seller.transactionType)}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{seller.transactionId}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 flex items-center">
                       <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
