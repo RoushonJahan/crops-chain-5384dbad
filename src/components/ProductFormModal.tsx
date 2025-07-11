@@ -1,8 +1,10 @@
 
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { BASE_URL } from '../config';
 
 const ProductFormModal = ({ isOpen, onClose, onSave, product = null }) => {
   const [formData, setFormData] = useState({
@@ -59,10 +61,16 @@ const ProductFormModal = ({ isOpen, onClose, onSave, product = null }) => {
 
   if (!isOpen) return null;
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onSave(formData);
-    onClose();
+    try {
+
+const response = await axios.post(`${BASE_URL}/products`, formData);
+      onSave(response.data);
+      onClose();
+    } catch (error) {
+      console.error('Failed to create product:', error);
+    }
   };
 
   return (

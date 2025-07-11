@@ -1,10 +1,12 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import Navigation from "@/components/Navigation";
 import FilterModal from "@/components/FilterModal";
 import { MapPin, Filter } from "lucide-react";
+import { BASE_URL } from '../config';
 
 interface PurchaseFilters {
   search: string;
@@ -22,7 +24,7 @@ const PurchaseHistory = () => {
     location: ''
   });
 
-  const purchases = [
+  const demoPurchases = [
     {
       id: 'PUR001',
       sellerShopName: 'Farm House',
@@ -99,6 +101,25 @@ const PurchaseHistory = () => {
       deliveryTime: '11:30 AM'
     }
   ];
+
+  const [purchases, setPurchases] = useState(demoPurchases);
+
+  useEffect(() => {
+    const fetchPurchases = async () => {
+      try {
+        const response = await axios.get(`${BASE_URL}/orders`); // Assuming /orders endpoint for purchases
+        if (response.data && response.data.length > 0) {
+          setPurchases(response.data);
+        } else {
+          setPurchases(demoPurchases);
+        }
+      } catch (error) {
+        console.error('Failed to fetch purchases:', error);
+        setPurchases(demoPurchases);
+      }
+    };
+    fetchPurchases();
+  }, []);
 
   const getTransactionBadge = (type) => {
     const colors = {

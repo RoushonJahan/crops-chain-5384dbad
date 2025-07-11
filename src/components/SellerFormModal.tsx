@@ -1,11 +1,14 @@
 
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { BASE_URL } from '../config';
 
 const SellerFormModal = ({ isOpen, onClose, onSave, seller = null }) => {
   const [formData, setFormData] = useState({
+    id: '',
     shopName: '',
     ownerName: '',
     phone: '',
@@ -19,6 +22,7 @@ const SellerFormModal = ({ isOpen, onClose, onSave, seller = null }) => {
   useEffect(() => {
     if (seller) {
       setFormData({
+        id: seller.id || '',
         shopName: seller.shopName || '',
         ownerName: seller.ownerName || '',
         phone: seller.phone || '',
@@ -30,6 +34,7 @@ const SellerFormModal = ({ isOpen, onClose, onSave, seller = null }) => {
       });
     } else {
       setFormData({
+        id: `S${String(Date.now()).slice(-3)}`,
         shopName: '',
         ownerName: '',
         phone: '',
@@ -44,10 +49,16 @@ const SellerFormModal = ({ isOpen, onClose, onSave, seller = null }) => {
 
   if (!isOpen) return null;
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onSave(formData);
-    onClose();
+    try {
+      
+      const response = await axios.post(`${BASE_URL}/sellers`, formData);
+      onSave(response.data);
+      onClose();
+    } catch (error) {
+      console.error('Failed to create seller:', error);
+    }
   };
 
   return (

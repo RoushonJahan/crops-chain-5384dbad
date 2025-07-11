@@ -1,5 +1,6 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import Navigation from "@/components/Navigation";
@@ -8,6 +9,7 @@ import ContactModal from "@/components/ContactModal";
 import FilterModal from "@/components/FilterModal";
 import SellerFormModal from "@/components/SellerFormModal";
 import { MapPin, Edit, Eye, Phone, Plus, Filter } from "lucide-react";
+import { BASE_URL } from '../config';
 
 interface BuyerFilters {
   search: string;
@@ -30,7 +32,7 @@ const Buyers = () => {
     location: ''
   });
 
-  const sellers = [
+  const demoSellers = [
     {
       id: 'SHP00001',
       shopName: 'Farm House',
@@ -97,6 +99,25 @@ const Buyers = () => {
       products: ['Potato', 'Onion', 'Garlic']
     }
   ];
+
+  const [sellers, setSellers] = useState(demoSellers);
+
+  useEffect(() => {
+    const fetchSellers = async () => {
+      try {
+        const response = await axios.get(`${BASE_URL}/sellers`);
+        if (response.data && response.data.length > 0) {
+          setSellers(response.data);
+        } else {
+          setSellers(demoSellers);
+        }
+      } catch (error) {
+        console.error('Failed to fetch sellers:', error);
+        setSellers(demoSellers);
+      }
+    };
+    fetchSellers();
+  }, []);
 
   const handleViewSeller = (seller) => {
     setSelectedSeller(seller);

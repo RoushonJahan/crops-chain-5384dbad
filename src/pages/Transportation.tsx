@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -8,6 +9,7 @@ import FilterModal from "@/components/FilterModal";
 import TransportFormModal from "@/components/TransportFormModal";
 import TransportDetailsModal from "@/components/TransportDetailsModal";
 import { Edit, Phone, Plus, Filter, Eye } from "lucide-react";
+import { BASE_URL } from '../config';
 
 interface TransportFilters {
   search: string;
@@ -31,7 +33,7 @@ const Transportation = () => {
     location: ''
   });
 
-  const transportCompanies = [
+  const demoTransportCompanies = [
     {
       id: 'TR001',
       name: 'Azhar Publication',
@@ -111,6 +113,26 @@ const Transportation = () => {
       features: ['Flexible Timing', 'Door to Door', 'Affordable Rates']
     }
   ];
+
+  const [transportCompanies, setTransportCompanies] = useState(demoTransportCompanies);
+
+  useEffect(() => {
+    const fetchTransportCompanies = async () => {
+      try {
+
+        const response = await axios.get(`${BASE_URL}/transportation`); // Assuming /transportation endpoint
+        if (response.data && response.data.length > 0) {
+          setTransportCompanies(response.data);
+        } else {
+          setTransportCompanies(demoTransportCompanies);
+        }
+      } catch (error) {
+        console.error('Failed to fetch transport companies:', error);
+        setTransportCompanies(demoTransportCompanies);
+      }
+    };
+    fetchTransportCompanies();
+  }, []);
 
   const handleCallNow = (company) => {
     setContactInfo({

@@ -1,5 +1,6 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -10,6 +11,7 @@ import TrackingModal from "@/components/TrackingModal";
 import FilterModal from "@/components/FilterModal";
 import ProductFormModal from "@/components/ProductFormModal";
 import { MapPin, Edit, ShoppingCart, Plus, Filter } from "lucide-react";
+import { BASE_URL } from '../config';
 
 interface ProductFilters {
   search: string;
@@ -33,7 +35,7 @@ const Products = () => {
     location: ''
   });
 
-  const products = [
+  const demoProducts = [
     {
       id: 'P001',
       name: 'Rice',
@@ -275,6 +277,25 @@ const Products = () => {
       harvestDate: '2024-01-22'
     }
   ];
+
+  const [products, setProducts] = useState(demoProducts);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get(`${BASE_URL}/products`);
+        if (response.data && response.data.length > 0) {
+          setProducts(response.data);
+        } else {
+          setProducts(demoProducts);
+        }
+      } catch (error) {
+        console.error('Failed to fetch products:', error);
+        setProducts(demoProducts);
+      }
+    };
+    fetchProducts();
+  }, []);
 
   const getStatusBadge = (status, quantity) => {
     if (status === 'stock-out' || quantity < 100) {
