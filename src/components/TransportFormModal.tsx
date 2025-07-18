@@ -7,6 +7,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { X, Save } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import axios from 'axios';
+import { BASE_URL } from "../config";
 
 interface TransportFormModalProps {
   isOpen: boolean;
@@ -60,7 +62,7 @@ const TransportFormModal = ({ isOpen, onClose, transportData, mode }: TransportF
     }
   }, [transportData, mode, isOpen]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!formData.name || !formData.vehicle || !formData.type) {
@@ -72,13 +74,28 @@ const TransportFormModal = ({ isOpen, onClose, transportData, mode }: TransportF
       return;
     }
 
-    const action = mode === 'create' ? 'created' : 'updated';
-    toast({
-      title: "Success",
-      description: `Transport service ${action} successfully!`,
-    });
-    
-    onClose();
+    try {
+      if (mode === 'create') {
+        await axios.post(`${BASE_URL}/transportation`, formData);
+        toast({
+          title: "Success",
+          description: `Transport service created successfully!`,
+        });
+      } else {
+        await axios.put(`${BASE_URL}/transportation/${transportData?.id}`, formData);
+        toast({
+          title: "Success",
+          description: `Transport service updated successfully!`,
+        });
+      }
+      onClose();
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: `Failed to ${mode === 'create' ? 'create' : 'update'} transport service!`,
+        variant: "destructive",
+      });
+    }
   };
 
   const handleInputChange = (field: string, value: string) => {
