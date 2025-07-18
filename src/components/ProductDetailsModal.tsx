@@ -5,9 +5,11 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Badge } from "@/components/ui/badge";
 import axios from 'axios';
 import { BASE_URL } from '../config';
+import PaymentModal from "@/components/PaymentModal";
+import TransportDetailsModal from "@/components/TransportDetailsModal";
 
-const ProductDetailsModal = ({ product, onClose, onConfirm }) => {
-  const [deliveryLocation, setDeliveryLocation] = useState('');
+const ProductDetailsModal = ({ product, onClose, onConfirm, onViewTransportDetails }) => {
+  const [deliveryLocation, setDeliveryLocation] = useState('Dhaka');
   const [selectedTransport, setSelectedTransport] = useState('');
   const [quantity, setQuantity] = useState(1);
 
@@ -42,7 +44,13 @@ const ProductDetailsModal = ({ product, onClose, onConfirm }) => {
 
   const handleConfirmOrder = () => {
     if (deliveryLocation && selectedTransport && quantity > 0) {
-      onConfirm();
+      const transportObj = transportCompanies.find(t => t.id === selectedTransport);
+      onConfirm({
+        product,
+        quantity,
+        deliveryLocation,
+        transport: transportObj,
+      });
     }
   };
 
@@ -170,6 +178,17 @@ const ProductDetailsModal = ({ product, onClose, onConfirm }) => {
                   ))}
                 </SelectContent>
               </Select>
+              <Button
+                variant="outline"
+                className="mt-2"
+                disabled={!selectedTransport}
+                onClick={() => {
+                  const transportObj = transportCompanies.find(t => t.id === selectedTransport);
+                  if (transportObj && onViewTransportDetails) onViewTransportDetails(transportObj);
+                }}
+              >
+                View Transport Details
+              </Button>
             </div>
 
             {/* Order Summary */}

@@ -12,6 +12,8 @@ import FilterModal from "@/components/FilterModal";
 import ProductFormModal from "@/components/ProductFormModal";
 import { MapPin, Edit, ShoppingCart, Plus, Filter } from "lucide-react";
 import { BASE_URL } from '../config';
+import PaymentModal from "@/components/PaymentModal";
+import TransportDetailsModal from "@/components/TransportDetailsModal";
 
 interface ProductFilters {
   search: string;
@@ -311,9 +313,34 @@ const Products = () => {
     setSelectedProduct(product);
   };
 
-  const handleOrderConfirm = () => {
+  const [showTransportDetails, setShowTransportDetails] = useState(false);
+  const [selectedTransport, setSelectedTransport] = useState(null);
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [orderInfo, setOrderInfo] = useState(null);
+
+  // Handler to open transport details
+  const handleViewTransportDetails = (transport) => {
+    setSelectedTransport(transport);
+    setShowTransportDetails(true);
+  };
+
+  // Handler after confirming order in ProductDetailsModal
+  const handleOrderConfirm = (orderDetails) => {
+    setOrderInfo(orderDetails); // {product, transport, quantity, ...}
     setSelectedProduct(null);
+    setShowPaymentModal(true);
+  };
+
+  // Handler after payment
+  const handlePaymentComplete = () => {
+    setShowPaymentModal(false);
     setShowOrderSuccess(true);
+  };
+
+  // Handler after confirming in TransportDetailsModal
+  const handleTransportConfirm = () => {
+    setShowTransportDetails(false);
+    setShowPaymentModal(true);
   };
 
   const handleTrackOrder = () => {
@@ -454,7 +481,23 @@ const Products = () => {
         product={selectedProduct}
         onClose={() => setSelectedProduct(null)}
         onConfirm={handleOrderConfirm}
+        onViewTransportDetails={handleViewTransportDetails}
       />
+
+      <TransportDetailsModal
+        isOpen={showTransportDetails}
+        onClose={() => setShowTransportDetails(false)}
+        transportData={selectedTransport}
+        onConfirm={handleTransportConfirm}
+      />
+
+      {showPaymentModal && orderInfo && (
+        <PaymentModal
+          orderInfo={orderInfo}
+          onClose={() => setShowPaymentModal(false)}
+          onComplete={handlePaymentComplete}
+        />
+      )}
 
       <OrderSuccessModal 
         isOpen={showOrderSuccess}

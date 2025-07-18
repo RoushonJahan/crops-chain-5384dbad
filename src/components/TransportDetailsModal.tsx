@@ -9,9 +9,10 @@ interface TransportDetailsModalProps {
   isOpen: boolean;
   onClose: () => void;
   transportData: any;
+  onConfirm?: () => void;
 }
 
-const TransportDetailsModal = ({ isOpen, onClose, transportData }: TransportDetailsModalProps) => {
+const TransportDetailsModal = ({ isOpen, onClose, transportData, onConfirm }: TransportDetailsModalProps) => {
   if (!transportData) return null;
 
   const getVehicleIcon = (type: string) => {
@@ -148,6 +149,11 @@ const TransportDetailsModal = ({ isOpen, onClose, transportData }: TransportDeta
               <Mail className="w-4 h-4 mr-2" />
               Send Message
             </Button>
+            {onConfirm && (
+              <Button className="flex-1 bg-blue-600 hover:bg-blue-700" onClick={onConfirm}>
+                Confirm Order
+              </Button>
+            )}
           </div>
         </div>
       </DialogContent>
