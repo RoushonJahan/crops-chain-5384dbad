@@ -15,7 +15,6 @@ const SellerFormModal = ({ isOpen, onClose, onSave, seller = null }) => {
     email: '',
     location: '',
     transactionType: '',
-    transactionId: '',
     products: []
   });
 
@@ -29,7 +28,6 @@ const SellerFormModal = ({ isOpen, onClose, onSave, seller = null }) => {
         email: seller.email || '',
         location: seller.location || '',
         transactionType: seller.transactionType || '',
-        transactionId: seller.transactionId || '',
         products: seller.products || []
       });
     } else {
@@ -41,7 +39,6 @@ const SellerFormModal = ({ isOpen, onClose, onSave, seller = null }) => {
         email: '',
         location: '',
         transactionType: '',
-        transactionId: '',
         products: []
       });
     }
@@ -140,15 +137,6 @@ const SellerFormModal = ({ isOpen, onClose, onSave, seller = null }) => {
                 <SelectItem value="bKash">bKash</SelectItem>
               </SelectContent>
             </Select>
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Transaction ID</label>
-            <Input
-              value={formData.transactionId}
-              onChange={(e) => setFormData({ ...formData, transactionId: e.target.value })}
-              required
-            />
           </div>
 
           <div className="flex gap-3 pt-4">

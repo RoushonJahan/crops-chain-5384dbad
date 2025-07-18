@@ -86,10 +86,6 @@ const SellerDetailsModal = ({ seller, onClose, onContact }) => {
                     <span className="text-gray-500">Member Since:</span>
                     <span className="font-medium">{seller.joinDate}</span>
                   </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-500">Transaction ID:</span>
-                    <span className="font-medium">{seller.transactionId}</span>
-                  </div>
                 </div>
               </div>
 

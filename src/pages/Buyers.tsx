@@ -42,7 +42,6 @@ const Buyers = () => {
       email: 'farmhouse@gmail.com',
       location: 'Rajshahi',
       transactionType: 'Nagad',
-      transactionId: 'TXN12345',
       totalOrders: 156,
       joinDate: 'Jan 2023',
       products: ['Rice', 'Wheat', 'Corn']
@@ -55,7 +54,6 @@ const Buyers = () => {
       email: 'agroagency@gmail.com',
       location: 'Dhaka',
       transactionType: 'bKash',
-      transactionId: 'TXN12346',
       totalOrders: 234,
       joinDate: 'Mar 2022',
       products: ['Wheat', 'Barley', 'Oats']
@@ -68,7 +66,6 @@ const Buyers = () => {
       email: 'northernagro@gmail.com',
       location: 'Gazipur',
       transactionType: 'Nagad',
-      transactionId: 'TXN12347',
       totalOrders: 189,
       joinDate: 'Jul 2023',
       products: ['Corn', 'Soybean', 'Sunflower']
@@ -81,7 +78,6 @@ const Buyers = () => {
       email: 'greenvalley@gmail.com',
       location: 'Cumilla',
       transactionType: 'bKash',
-      transactionId: 'TXN12348',
       totalOrders: 298,
       joinDate: 'Nov 2021',
       products: ['Tomato', 'Pepper', 'Cucumber']
@@ -94,7 +90,6 @@ const Buyers = () => {
       email: 'ruralfarmers@gmail.com',
       location: 'Bogura',
       transactionType: 'Nagad',
-      transactionId: 'TXN12349',
       totalOrders: 167,
       joinDate: 'Sep 2022',
       products: ['Potato', 'Onion', 'Garlic']
