@@ -15,9 +15,10 @@ interface TransportFormModalProps {
   onClose: () => void;
   transportData?: any;
   mode: 'create' | 'edit';
+  onSave?: () => void;
 }
 
-const TransportFormModal = ({ isOpen, onClose, transportData, mode }: TransportFormModalProps) => {
+const TransportFormModal = ({ isOpen, onClose, transportData, mode, onSave }: TransportFormModalProps) => {
   const { toast } = useToast();
   const [formData, setFormData] = useState({
     name: '',
@@ -87,6 +88,9 @@ const TransportFormModal = ({ isOpen, onClose, transportData, mode }: TransportF
           title: "Success",
           description: `Transport service updated successfully!`,
         });
+      }
+      if (typeof onSave === 'function') {
+        onSave();
       }
       onClose();
     } catch (error) {

@@ -117,21 +117,20 @@ const Transportation = () => {
 
   const [transportCompanies, setTransportCompanies] = useState(demoTransportCompanies);
 
-  useEffect(() => {
-    const fetchTransportCompanies = async () => {
-      try {
-
-        const response = await axios.get(`${BASE_URL}/transportation`); // Assuming /transportation endpoint
-        if (response.data && response.data.length > 0) {
-          setTransportCompanies(response.data);
-        } else {
-          setTransportCompanies(demoTransportCompanies);
-        }
-      } catch (error) {
-        console.error('Failed to fetch transport companies:', error);
+  const fetchTransportCompanies = async () => {
+    try {
+      const response = await axios.get(`${BASE_URL}/transportation`);
+      if (response.data && response.data.length > 0) {
+        setTransportCompanies(response.data);
+      } else {
         setTransportCompanies(demoTransportCompanies);
       }
-    };
+    } catch (error) {
+      console.error('Failed to fetch transport companies:', error);
+      setTransportCompanies(demoTransportCompanies);
+    }
+  };
+  useEffect(() => {
     fetchTransportCompanies();
   }, []);
 
@@ -203,6 +202,10 @@ const Transportation = () => {
           </svg>
         );
     }
+  };
+
+  const handleSaveTransport = () => {
+    fetchTransportCompanies();
   };
 
   return (
@@ -353,6 +356,7 @@ const Transportation = () => {
         onClose={() => setShowTransportForm(false)}
         transportData={selectedTransport}
         mode={formMode}
+        onSave={handleSaveTransport}
       />
 
       <TransportDetailsModal
