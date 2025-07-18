@@ -39,7 +39,8 @@ const TrackOrders = () => {
     location: "",
   });
 
-  const demoOrders = [
+  const demoOrders = [];
+  const demoOrdersReplica: OrderFormData[] = [
     {
       id: "ORD001",
       type: "Rice",

@@ -30,7 +30,8 @@ const Farmers = () => {
     location: ''
   });
 
-  const demoSellers = [
+  const demoSellers = [];
+  const demoSellersReplica = [
     {
       id: 'S001',
       shopName: 'Dhaka Electronics',
@@ -103,7 +104,7 @@ const Farmers = () => {
   useEffect(() => {
     const fetchSellers = async () => {
       try {
-        const response = await axios.get(`${BASE_URL}/sellers`);
+        const response = await axios.get(`${BASE_URL}/farmers`);
         if (response.data && response.data.length > 0) {
           setSellers(response.data);
         } else {

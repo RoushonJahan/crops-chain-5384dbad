@@ -65,7 +65,7 @@ const ProductFormModal = ({ isOpen, onClose, onSave, product = null }) => {
     e.preventDefault();
     try {
 
-const response = await axios.post(`${BASE_URL}/products`, formData);
+const response = await axios.put(`${BASE_URL}/products/${formData.id}`, formData);
       onSave(response.data);
       onClose();
     } catch (error) {

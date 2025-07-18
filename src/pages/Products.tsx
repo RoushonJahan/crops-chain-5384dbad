@@ -35,7 +35,8 @@ const Products = () => {
     location: ''
   });
 
-  const demoProducts = [
+  const demoProducts = [];
+  const demoProductsReplica = [
     {
       id: 'P001',
       name: 'Rice',

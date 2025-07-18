@@ -32,7 +32,8 @@ const Buyers = () => {
     location: ''
   });
 
-  const demoSellers = [
+  const demoSellers = [];
+  const demoSellersReplica = [
     {
       id: 'SHP00001',
       shopName: 'Farm House',
@@ -105,7 +106,7 @@ const Buyers = () => {
   useEffect(() => {
     const fetchSellers = async () => {
       try {
-        const response = await axios.get(`${BASE_URL}/sellers`);
+        const response = await axios.get(`${BASE_URL}/buyers`);
         if (response.data && response.data.length > 0) {
           setSellers(response.data);
         } else {

@@ -107,9 +107,6 @@ const TransportFormModal = ({ isOpen, onClose, transportData, mode }: TransportF
         <DialogHeader>
           <DialogTitle className="flex items-center justify-between">
             {mode === 'create' ? 'Create Transport Service' : 'Edit Transport Service'}
-            <Button variant="ghost" size="icon" onClick={onClose}>
-              <X className="h-4 w-4" />
-            </Button>
           </DialogTitle>
         </DialogHeader>
 

@@ -24,7 +24,8 @@ const PurchaseHistory = () => {
     location: ''
   });
 
-  const demoPurchases = [
+  const demoPurchases = [];
+  const demoPurchasesReplica = [
     {
       id: 'PUR001',
       sellerShopName: 'Farm House',
@@ -107,7 +108,7 @@ const PurchaseHistory = () => {
   useEffect(() => {
     const fetchPurchases = async () => {
       try {
-        const response = await axios.get(`${BASE_URL}/orders`); // Assuming /orders endpoint for purchases
+        const response = await axios.get(`${BASE_URL}/purchase-history`); // Assuming /orders endpoint for purchases
         if (response.data && response.data.length > 0) {
           setPurchases(response.data);
         } else {

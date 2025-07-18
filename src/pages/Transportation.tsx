@@ -33,7 +33,8 @@ const Transportation = () => {
     location: ''
   });
 
-  const demoTransportCompanies = [
+  const demoTransportCompanies = [];
+  const demoTransportCompaniesReplica = [
     {
       id: 'TR001',
       name: 'Azhar Publication',
