@@ -232,7 +232,7 @@ const Transportation = () => {
           </Button>
           <Button className="bg-green-600 hover:bg-green-700 gap-2" onClick={handleCreateTransport}>
             <Plus className="w-4 h-4" />
-            Create Transport
+            Add Transport
           </Button>
         </div>
 

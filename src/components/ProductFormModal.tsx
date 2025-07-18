@@ -93,7 +93,7 @@ const ProductFormModal = ({ isOpen, onClose, onSave, product = null }) => {
       <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full max-h-[90vh] overflow-y-auto p-6">
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-xl font-bold text-gray-900">
-            {product ? "Edit Product" : "Create Product"}
+            {product ? "Edit Product" : "Add Product"}
           </h2>
           <Button
             variant="ghost"

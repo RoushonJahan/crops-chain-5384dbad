@@ -186,7 +186,7 @@ const Farmers = () => {
           </Button>
           <Button className="bg-green-600 hover:bg-green-700 gap-2" onClick={handleCreate}>
             <Plus className="w-4 h-4" />
-            Create Seller
+            Add Seller
           </Button>
         </div>
 

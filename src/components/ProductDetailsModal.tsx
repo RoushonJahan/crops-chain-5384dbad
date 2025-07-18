@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
+import axios from 'axios';
+import { BASE_URL } from '../config';
 
 const ProductDetailsModal = ({ product, onClose, onConfirm }) => {
   const [deliveryLocation, setDeliveryLocation] = useState('');
@@ -17,6 +19,25 @@ const ProductDetailsModal = ({ product, onClose, onConfirm }) => {
     { id: 'TR005', name: 'Green Transport Co.', vehicle: 'Truck - 156', type: 'Truck' }
   ];
 
+  const [transportCompanies, setTransportCompanies] = useState(transportOptions);
+
+  const fetchTransportCompanies = async () => {
+    try {
+      const response = await axios.get(`${BASE_URL}/transportation`);
+      if (response.data && response.data.length > 0) {
+        setTransportCompanies(response.data);
+      } else {
+        setTransportCompanies(transportOptions);
+      }
+    } catch (error) {
+      console.error('Failed to fetch transport companies:', error);
+      setTransportCompanies(transportOptions);
+    }
+  };
+
+  useEffect(() => {
+    fetchTransportCompanies();
+  }, []);
   if (!product) return null;
 
   const handleConfirmOrder = () => {
@@ -137,7 +158,7 @@ const ProductDetailsModal = ({ product, onClose, onConfirm }) => {
                   <SelectValue placeholder="Choose transport company" />
                 </SelectTrigger>
                 <SelectContent>
-                  {transportOptions.map((transport) => (
+                  {transportCompanies.map((transport) => (
                     <SelectItem key={transport.id} value={transport.id}>
                       <div className="flex items-center justify-between w-full">
                         <span>{transport.name}</span>

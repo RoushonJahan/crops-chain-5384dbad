@@ -64,7 +64,7 @@ const SellerFormModal = ({ isOpen, onClose, onSave, seller = null }) => {
       onSave(response.data);
       onClose();
     } catch (error) {
-      console.error('Failed to create seller:', error);
+      console.error('Failed to add seller:', error);
     }
   };
 
@@ -73,7 +73,7 @@ const SellerFormModal = ({ isOpen, onClose, onSave, seller = null }) => {
       <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full max-h-[90vh] overflow-y-auto p-6">
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-xl font-bold text-gray-900">
-            {seller ? 'Edit Seller' : 'Create Seller'}
+            {seller ? 'Edit Seller' : 'Add Seller'}
           </h2>
           <Button variant="ghost" size="sm" onClick={onClose} className="rounded-full">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

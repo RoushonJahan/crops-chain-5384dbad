@@ -3,14 +3,6 @@ import React, { useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 
 const OrderSuccessModal = ({ isOpen, onClose, onTrackOrder }) => {
-  useEffect(() => {
-    if (isOpen) {
-      const timer = setTimeout(() => {
-        onClose();
-      }, 5000);
-      return () => clearTimeout(timer);
-    }
-  }, [isOpen, onClose]);
 
   if (!isOpen) return null;
 
