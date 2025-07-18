@@ -3,7 +3,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import { X, Phone, Mail, MapPin, Truck, DollarSign, Package } from "lucide-react";
+import {Phone, Mail, MapPin, Truck, Package } from "lucide-react";
 
 interface TransportDetailsModalProps {
   isOpen: boolean;
@@ -36,9 +36,6 @@ const TransportDetailsModal = ({ isOpen, onClose, transportData }: TransportDeta
         <DialogHeader>
           <DialogTitle className="flex items-center justify-between">
             Transport Service Details
-            <Button variant="ghost" size="icon" onClick={onClose}>
-              <X className="h-4 w-4" />
-            </Button>
           </DialogTitle>
         </DialogHeader>
 

@@ -52,8 +52,15 @@ const SellerFormModal = ({ isOpen, onClose, onSave, seller = null }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      
-      const response = await axios.post(`${BASE_URL}/sellers`, formData);
+      let response;
+      if (seller) {
+        response = await axios.put(
+          `${BASE_URL}/sellers/${formData.id}`,
+          formData
+        );
+      } else {
+        response = await axios.post(`${BASE_URL}/sellers`, formData);
+      }
       onSave(response.data);
       onClose();
     } catch (error) {

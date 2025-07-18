@@ -279,22 +279,24 @@ const Products = () => {
     }
   ];
 
+  // Move fetchProducts to top-level so it can be reused
   const [products, setProducts] = useState(demoProducts);
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await axios.get(`${BASE_URL}/products`);
-        if (response.data && response.data.length > 0) {
-          setProducts(response.data);
-        } else {
-          setProducts(demoProducts);
-        }
-      } catch (error) {
-        console.error('Failed to fetch products:', error);
+  const fetchProducts = async () => {
+    try {
+      const response = await axios.get(`${BASE_URL}/products`);
+      if (response.data && response.data.length > 0) {
+        setProducts(response.data);
+      } else {
         setProducts(demoProducts);
       }
-    };
+    } catch (error) {
+      console.error('Failed to fetch products:', error);
+      setProducts(demoProducts);
+    }
+  };
+
+  useEffect(() => {
     fetchProducts();
   }, []);
 
@@ -331,7 +333,7 @@ const Products = () => {
 
   const handleSaveProduct = (productData) => {
     console.log('Saving product:', productData);
-    // Here you would typically save to your backend
+    fetchProducts(); // Refresh the product list after save
   };
 
   const handleApplyFilter = (newFilters: ProductFilters) => {
