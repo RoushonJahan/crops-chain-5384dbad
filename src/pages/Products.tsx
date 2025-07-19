@@ -135,8 +135,8 @@ const Products = () => {
     fetchSellers();
   }, []);
 
-  const getStatusBadge = (status, quantity) => {
-    if (status === 'stock-out' || quantity < 100) {
+  const getStatusBadge = (quantity) => {
+    if (quantity < 0) {
       return <Badge className="bg-red-100 text-red-800 hover:bg-red-100">Stock Out</Badge>;
     }
     return <Badge className="bg-green-100 text-green-800 hover:bg-green-100">Available</Badge>;
@@ -283,12 +283,12 @@ const Products = () => {
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{product.name}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">৳{product.price}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{product.quantity}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{sellersMap[product?.shopId].shopName}</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{sellersMap[product?.shopId]?.shopName}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 flex items-center">
                       <MapPin className="w-4 h-4 mr-1 text-red-500" />
                       {sellersMap[product?.shopId]?.location}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">{getStatusBadge(product.status, product.quantity)}</td>
+                    <td className="px-6 py-4 whitespace-nowrap">{getStatusBadge(product.quantity)}</td>
                     <td className="px-6 py-4 whitespace-nowrap space-x-2">
                       <Button 
                         variant="outline"

@@ -36,9 +36,64 @@ const ProductDetailsModal = ({ product, onClose, onConfirm, onViewTransportDetai
       setTransportCompanies(transportOptions);
     }
   };
+  
+  const demoSellers = [
+    {
+      id: "S001",
+      shopName: "Dhaka Electronics",
+      ownerName: "Kazi Hassan",
+      phone: "+8801712346881",
+      transactionType: "bKash",
+      location: "Dhaka",
+      totalOrders: 156,
+      joinDate: "2023-03-15",
+    },
+    {
+      id: "S002",
+      shopName: "Chittagong Traders",
+      ownerName: "Rafiqul Alam",
+      phone: "+8801712346872",
+      transactionType: "Nagad",
+      location: "Chittagong",
+      totalOrders: 89,
+      joinDate: "2023-05-20",
+    },
+  ];
+  const [sellers, setSellers] = useState(demoSellers);
+  const [selectedSeller, setSelectedSeller] = useState("");
+  const [sellersMap, setSellersMap] = useState({});
+
+  const fetchSellers = async () => {
+    try {
+      const response = await axios.get(`${BASE_URL}/farmers`);
+      let fetchedSellers;
+      if (response.data && response.data.length > 0) {
+        fetchedSellers = response.data;
+        setSellers(fetchedSellers);
+      } else {
+        fetchedSellers = demoSellers;
+        setSellers(demoSellers);
+      }
+
+    const map = {};
+    fetchedSellers.forEach(seller => {
+      map[seller.id] = seller;
+    });
+    setSellersMap(map);
+    } catch (error) {
+      console.error("Failed to fetch sellers:", error);
+      setSellers(demoSellers);
+      const map = {};
+      demoSellers.forEach(seller => {
+        map[seller.id] = seller;
+      });
+      setSellersMap(map);
+    }
+  };
 
   useEffect(() => {
     fetchTransportCompanies();
+    fetchSellers();
   }, []);
   if (!product) return null;
 
@@ -110,7 +165,7 @@ const ProductDetailsModal = ({ product, onClose, onConfirm, onViewTransportDetai
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between">
                     <span className="text-gray-500">Shop Name:</span>
-                    <span className="font-medium">{product.shopName}</span>
+                    <span className="font-medium">{sellersMap[product?.shopId]?.shopName}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-500">Location:</span>
@@ -118,13 +173,13 @@ const ProductDetailsModal = ({ product, onClose, onConfirm, onViewTransportDetai
                       <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                       </svg>
-                      {product.location}
+                      {sellersMap[product?.shopId]?.location}
                     </span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-gray-500">Status:</span>
-                    <Badge className={product.status === 'stock-out' || product.quantity < 100 ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800'}>
-                      {product.status === 'stock-out' || product.quantity < 100 ? 'Stock Out' : 'Available'}
+                    <Badge className={ product.quantity < 0 ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800'}>
+                      {product.quantity < 0 ? 'Stock Out' : 'Available'}
                     </Badge>
                   </div>
                 </div>
