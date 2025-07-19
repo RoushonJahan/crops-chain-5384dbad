@@ -30,8 +30,7 @@ const Farmers = () => {
     location: ''
   });
 
-  const demoSellers = [];
-  const demoSellersReplica = [
+  const demoSellers = [
     {
       id: 'S001',
       shopName: 'Dhaka Electronics',
@@ -50,35 +49,8 @@ const Farmers = () => {
       location: 'Chittagong',
       totalOrders: 89,
     },
-    {
-      id: 'S003',
-      shopName: 'Sylhet Supermart',
-      ownerName: 'Mahfuz Ullah',
-      phone: '+8801712346873',
-      transactionType: 'Rocket',
-      location: 'Sylhet',
-      totalOrders: 203,
-    },
-    {
-      id: 'S004',
-      shopName: 'Rajshahi Hub',
-      ownerName: 'Jamal Hossain',
-      phone: '+8801712346874',
-      transactionType: 'Bank',
-      location: 'Rajshahi',
-      totalOrders: 134,
-    },
-    {
-      id: 'S005',
-      shopName: 'Khulna Wholesale',
-      ownerName: 'Rafiqul Rahman',
-      phone: '+8801712346875',
-      transactionType: 'bKash',
-      location: 'Khulna',
-      totalOrders: 98,
-    }
   ];
-
+  
   const [sellers, setSellers] = useState(demoSellers);
 
   useEffect(() => {

@@ -24,84 +24,38 @@ const PurchaseHistory = () => {
     location: ''
   });
 
-  const demoPurchases = [];
-  const demoPurchasesReplica = [
-    {
-      id: 'PUR001',
-      sellerShopName: 'Farm House',
-      sellerName: 'Md. Rahman',
-      shopAddress: 'Rajshahi, Bangladesh',
-      item: 'Rice',
-      quantity: 100,
-      totalPrice: 4500,
-      buyerName: 'Abdul Karim',
-      transportationName: 'Swift Logistics',
-      destinationAddress: 'Dhaka, Bangladesh',
-      transactionType: 'bKash',
-      deliveryDate: '2024-02-20',
-      deliveryTime: '3:00 PM'
-    },
-    {
-      id: 'PUR002',
-      sellerShopName: 'Green Valley',
-      sellerName: 'Nasir Ahmed',
-      shopAddress: 'Cumilla, Bangladesh',
-      item: 'Tomato',
-      quantity: 50,
-      totalPrice: 1250,
-      buyerName: 'Fatima Khatun',
-      transportationName: 'Fast Express',
-      destinationAddress: 'Chittagong, Bangladesh',
-      transactionType: 'Nagad',
-      deliveryDate: '2024-03-01',
-      deliveryTime: '2:30 PM'
-    },
-    {
-      id: 'PUR003',
-      sellerShopName: 'AgroAgency Ltd. Co.',
-      sellerName: 'Fatima Khatun',
-      shopAddress: 'Dhaka, Bangladesh',
-      item: 'Wheat',
-      quantity: 200,
-      totalPrice: 11000,
-      buyerName: 'Mohammad Ali',
-      transportationName: 'Metro Transport',
-      destinationAddress: 'Sylhet, Bangladesh',
-      transactionType: 'Rocket',
-      deliveryDate: '2024-03-05',
-      deliveryTime: '1:45 PM'
-    },
-    {
-      id: 'PUR004',
-      sellerShopName: 'Rural Farmers',
-      sellerName: 'Rashida Begum',
-      shopAddress: 'Bogura, Bangladesh',
-      item: 'Potato',
-      quantity: 150,
-      totalPrice: 2700,
-      buyerName: 'Aminul Islam',
-      transportationName: 'Quick Delivery',
-      destinationAddress: 'Rangpur, Bangladesh',
-      transactionType: 'Bank',
-      deliveryDate: '2024-03-08',
-      deliveryTime: '4:15 PM'
-    },
-    {
-      id: 'PUR005',
-      sellerShopName: 'Northern Agro',
-      sellerName: 'Abdul Karim',
-      shopAddress: 'Gazipur, Bangladesh',
-      item: 'Corn',
-      quantity: 80,
-      totalPrice: 2800,
-      buyerName: 'Salma Khatun',
-      transportationName: 'Express Cargo',
-      destinationAddress: 'Khulna, Bangladesh',
-      transactionType: 'bKash',
-      deliveryDate: '2024-03-12',
-      deliveryTime: '11:30 AM'
-    }
-  ];
+  const demoPurchases = [    {
+    id: 'PUR001',
+    sellerShopName: 'Farm House',
+    sellerName: 'Md. Rahman',
+    shopAddress: 'Rajshahi, Bangladesh',
+    item: 'Rice',
+    quantity: 100,
+    totalPrice: 4500,
+    buyerName: 'Abdul Karim',
+    transportationName: 'Swift Logistics',
+    destinationAddress: 'Dhaka, Bangladesh',
+    transactionType: 'bKash',
+    deliveryDate: '2024-02-20',
+    deliveryTime: '3:00 PM'
+  },
+  {
+    id: 'PUR002',
+    sellerShopName: 'Green Valley',
+    sellerName: 'Nasir Ahmed',
+    shopAddress: 'Cumilla, Bangladesh',
+    item: 'Tomato',
+    quantity: 50,
+    totalPrice: 1250,
+    buyerName: 'Fatima Khatun',
+    transportationName: 'Fast Express',
+    destinationAddress: 'Chittagong, Bangladesh',
+    transactionType: 'Nagad',
+    deliveryDate: '2024-03-01',
+    deliveryTime: '2:30 PM'
+  },
+];
+  
 
   const [purchases, setPurchases] = useState(demoPurchases);
 

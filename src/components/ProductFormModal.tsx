@@ -17,10 +17,8 @@ const ProductFormModal = ({ isOpen, onClose, onSave, product = null }) => {
     name: "",
     price: "",
     quantity: "",
-    shopName: "",
+    shopId: "",
     location: "",
-    description: "",
-    farmDetails: "",
     harvestDate: "",
   });
 
@@ -31,10 +29,8 @@ const ProductFormModal = ({ isOpen, onClose, onSave, product = null }) => {
         name: product.name || "",
         price: product.price || "",
         quantity: product.quantity || "",
-        shopName: product.shopName || "",
+        shopId: product.shopId || "",
         location: product.location || "",
-        description: product.description || "",
-        farmDetails: product.farmDetails || "",
         harvestDate: product.harvestDate || "",
       });
     } else {
@@ -43,10 +39,8 @@ const ProductFormModal = ({ isOpen, onClose, onSave, product = null }) => {
         name: "",
         price: "",
         quantity: "",
-        shopName: "",
+        shopId: "",
         location: "",
-        description: "",
-        farmDetails: "",
         harvestDate: "",
       });
     }
@@ -54,90 +48,43 @@ const ProductFormModal = ({ isOpen, onClose, onSave, product = null }) => {
 
   const demoSellers = [
     {
-      id: 'S001',
-      shopName: 'Dhaka Electronics',
-      ownerName: 'Kazi Hassan',
-      phone: '+8801712346881',
-      email: 'dhakaelectronics@gmail.com',
-      transactionType: 'bKash',
-      location: 'Dhaka',
-      products: ['Rice', 'Wheat', 'Electronics'],
-      rating: 4.8,
+      id: "S001",
+      shopName: "Dhaka Electronics",
+      ownerName: "Kazi Hassan",
+      phone: "+8801712346881",
+      transactionType: "bKash",
+      location: "Dhaka",
       totalOrders: 156,
-      joinDate: '2023-03-15'
+      joinDate: "2023-03-15",
     },
     {
-      id: 'S002',
-      shopName: 'Chittagong Traders',
-      ownerName: 'Rafiqul Alam',
-      phone: '+8801712346872',
-      email: 'chittagongtrading@gmail.com',
-      transactionType: 'Nagad',
-      location: 'Chittagong',
-      products: ['Vegetables', 'Fruits', 'Grains'],
-      rating: 4.6,
+      id: "S002",
+      shopName: "Chittagong Traders",
+      ownerName: "Rafiqul Alam",
+      phone: "+8801712346872",
+      transactionType: "Nagad",
+      location: "Chittagong",
       totalOrders: 89,
-      joinDate: '2023-05-20'
+      joinDate: "2023-05-20",
     },
-    {
-      id: 'S003',
-      shopName: 'Sylhet Supermart',
-      ownerName: 'Mahfuz Ullah',
-      phone: '+8801712346873',
-      email: 'sylhetsupermart@gmail.com',
-      transactionType: 'Rocket',
-      location: 'Sylhet',
-      products: ['Tea', 'Spices', 'Organic Products'],
-      rating: 4.9,
-      totalOrders: 203,
-      joinDate: '2023-01-10'
-    },
-    {
-      id: 'S004',
-      shopName: 'Rajshahi Hub',
-      ownerName: 'Jamal Hossain',
-      phone: '+8801712346874',
-      email: 'rajshahihub@gmail.com',
-      transactionType: 'Bank',
-      location: 'Rajshahi',
-      products: ['Mango', 'Silk', 'Handicrafts'],
-      rating: 4.7,
-      totalOrders: 134,
-      joinDate: '2023-04-08'
-    },
-    {
-      id: 'S005',
-      shopName: 'Khulna Wholesale',
-      ownerName: 'Rafiqul Rahman',
-      phone: '+8801712346875',
-      email: 'khulnawholesale@gmail.com',
-      transactionType: 'bKash',
-      location: 'Khulna',
-      products: ['Shrimp', 'Fish', 'Seafood'],
-      rating: 4.5,
-      totalOrders: 98,
-      joinDate: '2023-06-12'
-    }
   ];
 
   const [sellers, setSellers] = useState(demoSellers);
-  const [selectedSeller, setSelectedSeller] = useState('');
+  const [selectedSeller, setSelectedSeller] = useState("");
 
-    const fetchSellers = async () => {
-      try {
-        const response = await axios.get(`${BASE_URL}/farmers`);
-        if (response.data && response.data.length > 0) {
-          setSellers(response.data);
-        } else {
-          setSellers(demoSellers);
-        }
-      } catch (error) {
-        console.error('Failed to fetch sellers:', error);
+  const fetchSellers = async () => {
+    try {
+      const response = await axios.get(`${BASE_URL}/farmers`);
+      if (response.data && response.data.length > 0) {
+        setSellers(response.data);
+      } else {
         setSellers(demoSellers);
       }
-    };
-
-
+    } catch (error) {
+      console.error("Failed to fetch sellers:", error);
+      setSellers(demoSellers);
+    }
+  };
 
   useEffect(() => {
     fetchSellers();
@@ -244,26 +191,36 @@ const ProductFormModal = ({ isOpen, onClose, onSave, product = null }) => {
           </div>
 
           <div className="mb-6">
-              <label className="block text-sm font-medium text-gray-700 mb-2">Select Shop Name</label>
-              <Select value={selectedSeller} onValueChange={setSelectedSeller}>
-                <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Choose seller shop name" />
-                </SelectTrigger>
-                <SelectContent>
-                  {sellers.map((seller) => (
-                    <SelectItem key={seller.id} value={seller.id}>
-                      <div className="flex items-center justify-between w-full">
-                        <span>{seller.shopName}</span>
-                        <span className="text-sm text-gray-500 ml-2">
-                          {seller.ownerName} ({seller.location})
-                        </span>
-                      </div>
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Select Shop Name
+            </label>
+            <Select
+              value={selectedSeller}
+              onValueChange={(sellerId) => {
+                setSelectedSeller(sellerId);
+                setFormData({
+                  ...formData,
+                  shopId: sellerId,
+                });
+              }}
+            >
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Choose seller shop name" />
+              </SelectTrigger>
+              <SelectContent>
+                {sellers.map((seller) => (
+                  <SelectItem key={seller.id} value={seller.id}>
+                    <div className="flex items-center justify-between w-full">
+                      <span>{seller.shopName}</span>
+                      <span className="text-sm text-gray-500 ml-2">
+                        {seller.ownerName} ({seller.location})
+                      </span>
+                    </div>
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">

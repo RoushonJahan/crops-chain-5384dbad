@@ -32,54 +32,26 @@ const Buyers = () => {
     location: ''
   });
 
-  const demoSellers = [];
-  const demoSellersReplica = [
-    {
-      id: 'SHP00001',
-      shopName: 'Farm House',
-      ownerName: 'Md. Rahman',
-      phone: '+8801712345001',
-      location: 'Rajshahi',
-      transactionType: 'Nagad',
-      totalOrders: 156,
-    },
-    {
-      id: 'SHP00002',
-      shopName: 'AgroAgency Ltd. Co.',
-      ownerName: 'Fatima Khatun',
-      phone: '+8801712345002',
-      location: 'Dhaka',
-      transactionType: 'bKash',
-      totalOrders: 234,
-    },
-    {
-      id: 'SHP00003',
-      shopName: 'Northern Agro',
-      ownerName: 'Abdul Karim',
-      phone: '+8801712345003',
-      location: 'Gazipur',
-      transactionType: 'Nagad',
-      totalOrders: 189,
-    },
-    {
-      id: 'SHP00004',
-      shopName: 'Green Valley',
-      ownerName: 'Nasir Ahmed',
-      phone: '+8801712345004',
-      location: 'Cumilla',
-      transactionType: 'bKash',
-      totalOrders: 298,
-    },
-    {
-      id: 'SHP00005',
-      shopName: 'Rural Farmers',
-      ownerName: 'Rashida Begum',
-      phone: '+8801712345005',
-      location: 'Bogura',
-      transactionType: 'Nagad',
-      totalOrders: 167,
-    }
-  ];
+  const demoSellers = [  {
+    id: 'SHP00001',
+    shopName: 'Farm House',
+    ownerName: 'Md. Rahman',
+    phone: '+8801712345001',
+    location: 'Rajshahi',
+    transactionType: 'Nagad',
+    totalOrders: 156,
+  },
+  {
+    id: 'SHP00002',
+    shopName: 'AgroAgency Ltd. Co.',
+    ownerName: 'Fatima Khatun',
+    phone: '+8801712345002',
+    location: 'Dhaka',
+    transactionType: 'bKash',
+    totalOrders: 234,
+  }
+];
+
 
   const [sellers, setSellers] = useState(demoSellers);
 

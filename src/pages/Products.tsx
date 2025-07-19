@@ -37,8 +37,7 @@ const Products = () => {
     location: ''
   });
 
-  const demoProducts = [];
-  const demoProductsReplica = [
+  const demoProducts = [
     {
       id: 'P001',
       name: 'Rice',
@@ -59,187 +58,60 @@ const Products = () => {
       status: 'available',
       harvestDate: '2024-01-20'
     },
-    {
-      id: 'P003',
-      name: 'Corn',
-      price: 35,
-      quantity: 87,
-      shopName: 'Northern Agro',
-      location: 'Gazipur',
-      status: 'stock-out',
-      harvestDate: '2024-01-10'
-    },
-    {
-      id: 'P004',
-      name: 'Tomato',
-      price: 25,
-      quantity: 200,
-      shopName: 'Green Valley',
-      location: 'Cumilla',
-      status: 'available',
-      harvestDate: '2024-02-01'
-    },
-    {
-      id: 'P005',
-      name: 'Potato',
-      price: 18,
-      quantity: 450,
-      shopName: 'Rural Farmers',
-      location: 'Bogura',
-      status: 'available',
-      harvestDate: '2024-01-25'
-    },
-    {
-      id: 'P006',
-      name: 'Onion',
-      price: 30,
-      quantity: 320,
-      shopName: 'Valley Fresh',
-      location: 'Pabna',
-      status: 'available',
-      harvestDate: '2024-02-05'
-    },
-    {
-      id: 'P007',
-      name: 'Garlic',
-      price: 120,
-      quantity: 150,
-      shopName: 'Spice Garden',
-      location: 'Jessore',
-      status: 'available',
-      harvestDate: '2024-01-28'
-    },
-    {
-      id: 'P008',
-      name: 'Carrot',
-      price: 40,
-      quantity: 280,
-      shopName: 'Vegetable Hub',
-      location: 'Rangpur',
-      status: 'available',
-      harvestDate: '2024-02-10'
-    },
-    {
-      id: 'P009',
-      name: 'Spinach',
-      price: 15,
-      quantity: 95,
-      shopName: 'Green Leaf',
-      location: 'Mymensingh',
-      status: 'stock-out',
-      harvestDate: '2024-02-12'
-    },
-    {
-      id: 'P010',
-      name: 'Cabbage',
-      price: 22,
-      quantity: 400,
-      shopName: 'Farm Fresh',
-      location: 'Comilla',
-      status: 'available',
-      harvestDate: '2024-02-08'
-    },
-    {
-      id: 'P011',
-      name: 'Cauliflower',
-      price: 35,
-      quantity: 180,
-      shopName: 'White Pearl',
-      location: 'Tangail',
-      status: 'available',
-      harvestDate: '2024-02-06'
-    },
-    {
-      id: 'P012',
-      name: 'Brinjal',
-      price: 28,
-      quantity: 220,
-      shopName: 'Purple Garden',
-      location: 'Narayanganj',
-      status: 'available',
-      harvestDate: '2024-02-09'
-    },
-    {
-      id: 'P013',
-      name: 'Cucumber',
-      price: 20,
-      quantity: 75,
-      shopName: 'Cool Veg',
-      location: 'Faridpur',
-      status: 'stock-out',
-      harvestDate: '2024-02-11'
-    },
-    {
-      id: 'P014',
-      name: 'Pumpkin',
-      price: 25,
-      quantity: 350,
-      shopName: 'Orange Farm',
-      location: 'Barisal',
-      status: 'available',
-      harvestDate: '2024-01-30'
-    },
-    {
-      id: 'P015',
-      name: 'Green Beans',
-      price: 45,
-      quantity: 160,
-      shopName: 'Bean Field',
-      location: 'Kishoreganj',
-      status: 'available',
-      harvestDate: '2024-02-07'
-    },
-    {
-      id: 'P016',
-      name: 'Bell Pepper',
-      price: 65,
-      quantity: 85,
-      shopName: 'Color Garden',
-      location: 'Manikganj',
-      status: 'stock-out',
-      harvestDate: '2024-02-04'
-    },
-    {
-      id: 'P017',
-      name: 'Okra',
-      price: 35,
-      quantity: 190,
-      shopName: 'Green Finger',
-      location: 'Gopalganj',
-      status: 'available',
-      harvestDate: '2024-02-13'
-    },
-    {
-      id: 'P018',
-      name: 'Green Chili',
-      price: 80,
-      quantity: 120,
-      shopName: 'Spicy Farm',
-      location: 'Patuakhali',
-      status: 'available',
-      harvestDate: '2024-02-02'
-    },
-    {
-      id: 'P019',
-      name: 'Lemon',
-      price: 90,
-      quantity: 250,
-      shopName: 'Citrus Grove',
-      location: 'Sylhet',
-      status: 'available',
-      harvestDate: '2024-01-18'
-    },
-    {
-      id: 'P020',
-      name: 'Ginger',
-      price: 150,
-      quantity: 90,
-      shopName: 'Root Spice',
-      location: 'Bandarban',
-      status: 'stock-out',
-      harvestDate: '2024-01-22'
-    }
   ];
+  const demoSellers = [
+    {
+      id: "S001",
+      shopName: "Dhaka Electronics",
+      ownerName: "Kazi Hassan",
+      phone: "+8801712346881",
+      transactionType: "bKash",
+      location: "Dhaka",
+      totalOrders: 156,
+      joinDate: "2023-03-15",
+    },
+    {
+      id: "S002",
+      shopName: "Chittagong Traders",
+      ownerName: "Rafiqul Alam",
+      phone: "+8801712346872",
+      transactionType: "Nagad",
+      location: "Chittagong",
+      totalOrders: 89,
+      joinDate: "2023-05-20",
+    },
+  ];
+  const [sellers, setSellers] = useState(demoSellers);
+  const [selectedSeller, setSelectedSeller] = useState("");
+  const [sellersMap, setSellersMap] = useState({});
+
+  const fetchSellers = async () => {
+    try {
+      const response = await axios.get(`${BASE_URL}/farmers`);
+      let fetchedSellers;
+      if (response.data && response.data.length > 0) {
+        fetchedSellers = response.data;
+        setSellers(fetchedSellers);
+      } else {
+        fetchedSellers = demoSellers;
+        setSellers(demoSellers);
+      }
+
+    const map = {};
+    fetchedSellers.forEach(seller => {
+      map[seller.id] = seller;
+    });
+    setSellersMap(map);
+    } catch (error) {
+      console.error("Failed to fetch sellers:", error);
+      setSellers(demoSellers);
+      const map = {};
+      demoSellers.forEach(seller => {
+        map[seller.id] = seller;
+      });
+      setSellersMap(map);
+    }
+  };
 
   // Move fetchProducts to top-level so it can be reused
   const [products, setProducts] = useState(demoProducts);
@@ -260,6 +132,7 @@ const Products = () => {
 
   useEffect(() => {
     fetchProducts();
+    fetchSellers();
   }, []);
 
   const getStatusBadge = (status, quantity) => {
@@ -410,10 +283,10 @@ const Products = () => {
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{product.name}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">৳{product.price}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{product.quantity}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{product.shopName}</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{sellersMap[product?.shopId].shopName}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 flex items-center">
                       <MapPin className="w-4 h-4 mr-1 text-red-500" />
-                      {product.location}
+                      {sellersMap[product?.shopId]?.location}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">{getStatusBadge(product.status, product.quantity)}</td>
                     <td className="px-6 py-4 whitespace-nowrap space-x-2">
