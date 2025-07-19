@@ -145,13 +145,9 @@ const TransportDetailsModal = ({ isOpen, onClose, transportData, onConfirm }: Tr
               <Phone className="w-4 h-4 mr-2" />
               Call Now
             </Button>
-            <Button variant="outline" className="flex-1">
-              <Mail className="w-4 h-4 mr-2" />
-              Send Message
-            </Button>
             {onConfirm && (
               <Button className="flex-1 bg-blue-600 hover:bg-blue-700" onClick={onConfirm}>
-                Confirm Order
+                Confirm Transport
               </Button>
             )}
           </div>

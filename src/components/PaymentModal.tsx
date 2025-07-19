@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 
-const PaymentModal = ({ orderInfo, onClose, onComplete }) => {
+const PaymentModal = ({ orderInfo, onClose, onComplete, onBack }) => {
   const { product, quantity, transport } = orderInfo || {};
   // You can add more fields as needed
 
@@ -20,9 +20,14 @@ const PaymentModal = ({ orderInfo, onClose, onComplete }) => {
         <Button className="w-full bg-green-600 hover:bg-green-700" onClick={onComplete}>
           Complete Payment
         </Button>
-        <Button variant="outline" className="w-full mt-2" onClick={onClose}>
-          Cancel
-        </Button>
+        <div className="flex gap-2 mt-2">
+          <Button variant="outline" className="flex-1" onClick={onBack}>
+            Back
+          </Button>
+          <Button variant="outline" className="flex-1" onClick={onClose}>
+            Cancel
+          </Button>
+        </div>
       </div>
     </div>
   );

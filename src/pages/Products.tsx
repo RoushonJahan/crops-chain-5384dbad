@@ -343,6 +343,12 @@ const Products = () => {
     setShowPaymentModal(true);
   };
 
+  // Handler for going back from payment to transport details
+  const handlePaymentBack = () => {
+    setShowPaymentModal(false);
+    setShowTransportDetails(true);
+  };
+
   const handleTrackOrder = () => {
     setShowOrderSuccess(false);
     setShowTracking(true);
@@ -496,6 +502,7 @@ const Products = () => {
           orderInfo={orderInfo}
           onClose={() => setShowPaymentModal(false)}
           onComplete={handlePaymentComplete}
+          onBack={handlePaymentBack}
         />
       )}
 
