@@ -47,8 +47,6 @@ const Products = () => {
       shopName: 'Farm House',
       location: 'Rajshahi',
       status: 'available',
-      description: 'Premium quality basmati rice directly from organic farms',
-      farmDetails: 'Grown using traditional methods without harmful pesticides',
       harvestDate: '2024-01-15'
     },
     {
@@ -59,8 +57,6 @@ const Products = () => {
       shopName: 'AgroAgency Ltd. Co.',
       location: 'Dhaka',
       status: 'available',
-      description: 'High-quality wheat grains perfect for flour production',
-      farmDetails: 'Harvested from certified organic farms',
       harvestDate: '2024-01-20'
     },
     {
@@ -71,8 +67,6 @@ const Products = () => {
       shopName: 'Northern Agro',
       location: 'Gazipur',
       status: 'stock-out',
-      description: 'Sweet corn variety suitable for both consumption and processing',
-      farmDetails: 'Non-GMO corn grown in fertile soil',
       harvestDate: '2024-01-10'
     },
     {
@@ -83,8 +77,6 @@ const Products = () => {
       shopName: 'Green Valley',
       location: 'Cumilla',
       status: 'available',
-      description: 'Fresh tomatoes picked at peak ripeness',
-      farmDetails: 'Greenhouse grown with controlled environment',
       harvestDate: '2024-02-01'
     },
     {
@@ -95,8 +87,6 @@ const Products = () => {
       shopName: 'Rural Farmers',
       location: 'Bogura',
       status: 'available',
-      description: 'Premium potatoes suitable for cooking and processing',
-      farmDetails: 'Grown in clay-rich soil for better texture',
       harvestDate: '2024-01-25'
     },
     {
@@ -107,8 +97,6 @@ const Products = () => {
       shopName: 'Valley Fresh',
       location: 'Pabna',
       status: 'available',
-      description: 'Fresh red onions with strong flavor',
-      farmDetails: 'Organically grown without chemical fertilizers',
       harvestDate: '2024-02-05'
     },
     {
@@ -119,8 +107,6 @@ const Products = () => {
       shopName: 'Spice Garden',
       location: 'Jessore',
       status: 'available',
-      description: 'Premium quality garlic bulbs',
-      farmDetails: 'Naturally dried and cured',
       harvestDate: '2024-01-28'
     },
     {
@@ -131,8 +117,6 @@ const Products = () => {
       shopName: 'Vegetable Hub',
       location: 'Rangpur',
       status: 'available',
-      description: 'Fresh carrots rich in vitamins',
-      farmDetails: 'Grown in organic soil',
       harvestDate: '2024-02-10'
     },
     {
@@ -143,8 +127,6 @@ const Products = () => {
       shopName: 'Green Leaf',
       location: 'Mymensingh',
       status: 'stock-out',
-      description: 'Fresh green spinach leaves',
-      farmDetails: 'Pesticide-free cultivation',
       harvestDate: '2024-02-12'
     },
     {
@@ -155,8 +137,6 @@ const Products = () => {
       shopName: 'Farm Fresh',
       location: 'Comilla',
       status: 'available',
-      description: 'Crisp and fresh cabbage heads',
-      farmDetails: 'Grown in controlled environment',
       harvestDate: '2024-02-08'
     },
     {
@@ -167,8 +147,6 @@ const Products = () => {
       shopName: 'White Pearl',
       location: 'Tangail',
       status: 'available',
-      description: 'Fresh white cauliflower',
-      farmDetails: 'Organically cultivated',
       harvestDate: '2024-02-06'
     },
     {
@@ -179,8 +157,6 @@ const Products = () => {
       shopName: 'Purple Garden',
       location: 'Narayanganj',
       status: 'available',
-      description: 'Fresh purple brinjal',
-      farmDetails: 'Natural farming methods',
       harvestDate: '2024-02-09'
     },
     {
@@ -191,8 +167,6 @@ const Products = () => {
       shopName: 'Cool Veg',
       location: 'Faridpur',
       status: 'stock-out',
-      description: 'Fresh green cucumbers',
-      farmDetails: 'Hydroponic cultivation',
       harvestDate: '2024-02-11'
     },
     {
@@ -203,8 +177,6 @@ const Products = () => {
       shopName: 'Orange Farm',
       location: 'Barisal',
       status: 'available',
-      description: 'Large orange pumpkins',
-      farmDetails: 'Traditional farming',
       harvestDate: '2024-01-30'
     },
     {
@@ -215,8 +187,6 @@ const Products = () => {
       shopName: 'Bean Field',
       location: 'Kishoreganj',
       status: 'available',
-      description: 'Fresh green beans',
-      farmDetails: 'Organic farming practices',
       harvestDate: '2024-02-07'
     },
     {
@@ -227,8 +197,6 @@ const Products = () => {
       shopName: 'Color Garden',
       location: 'Manikganj',
       status: 'stock-out',
-      description: 'Mixed color bell peppers',
-      farmDetails: 'Greenhouse cultivation',
       harvestDate: '2024-02-04'
     },
     {
@@ -239,8 +207,6 @@ const Products = () => {
       shopName: 'Green Finger',
       location: 'Gopalganj',
       status: 'available',
-      description: 'Fresh okra vegetables',
-      farmDetails: 'Natural cultivation',
       harvestDate: '2024-02-13'
     },
     {
@@ -251,8 +217,6 @@ const Products = () => {
       shopName: 'Spicy Farm',
       location: 'Patuakhali',
       status: 'available',
-      description: 'Hot green chilies',
-      farmDetails: 'Organic spice farming',
       harvestDate: '2024-02-02'
     },
     {
@@ -263,8 +227,6 @@ const Products = () => {
       shopName: 'Citrus Grove',
       location: 'Sylhet',
       status: 'available',
-      description: 'Fresh juicy lemons',
-      farmDetails: 'Citrus orchard cultivation',
       harvestDate: '2024-01-18'
     },
     {
@@ -275,8 +237,6 @@ const Products = () => {
       shopName: 'Root Spice',
       location: 'Bandarban',
       status: 'stock-out',
-      description: 'Fresh ginger roots',
-      farmDetails: 'Hill tract cultivation',
       harvestDate: '2024-01-22'
     }
   ];

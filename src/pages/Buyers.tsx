@@ -39,60 +39,45 @@ const Buyers = () => {
       shopName: 'Farm House',
       ownerName: 'Md. Rahman',
       phone: '+8801712345001',
-      email: 'farmhouse@gmail.com',
       location: 'Rajshahi',
       transactionType: 'Nagad',
       totalOrders: 156,
-      joinDate: 'Jan 2023',
-      products: ['Rice', 'Wheat', 'Corn']
     },
     {
       id: 'SHP00002',
       shopName: 'AgroAgency Ltd. Co.',
       ownerName: 'Fatima Khatun',
       phone: '+8801712345002',
-      email: 'agroagency@gmail.com',
       location: 'Dhaka',
       transactionType: 'bKash',
       totalOrders: 234,
-      joinDate: 'Mar 2022',
-      products: ['Wheat', 'Barley', 'Oats']
     },
     {
       id: 'SHP00003',
       shopName: 'Northern Agro',
       ownerName: 'Abdul Karim',
       phone: '+8801712345003',
-      email: 'northernagro@gmail.com',
       location: 'Gazipur',
       transactionType: 'Nagad',
       totalOrders: 189,
-      joinDate: 'Jul 2023',
-      products: ['Corn', 'Soybean', 'Sunflower']
     },
     {
       id: 'SHP00004',
       shopName: 'Green Valley',
       ownerName: 'Nasir Ahmed',
       phone: '+8801712345004',
-      email: 'greenvalley@gmail.com',
       location: 'Cumilla',
       transactionType: 'bKash',
       totalOrders: 298,
-      joinDate: 'Nov 2021',
-      products: ['Tomato', 'Pepper', 'Cucumber']
     },
     {
       id: 'SHP00005',
       shopName: 'Rural Farmers',
       ownerName: 'Rashida Begum',
       phone: '+8801712345005',
-      email: 'ruralfarmers@gmail.com',
       location: 'Bogura',
       transactionType: 'Nagad',
       totalOrders: 167,
-      joinDate: 'Sep 2022',
-      products: ['Potato', 'Onion', 'Garlic']
     }
   ];
 

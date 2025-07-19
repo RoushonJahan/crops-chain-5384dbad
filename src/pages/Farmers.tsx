@@ -37,65 +37,45 @@ const Farmers = () => {
       shopName: 'Dhaka Electronics',
       ownerName: 'Kazi Hassan',
       phone: '+8801712346881',
-      email: 'dhakaelectronics@gmail.com',
       transactionType: 'bKash',
       location: 'Dhaka',
-      products: ['Rice', 'Wheat', 'Electronics'],
-      rating: 4.8,
       totalOrders: 156,
-      joinDate: '2023-03-15'
     },
     {
       id: 'S002',
       shopName: 'Chittagong Traders',
       ownerName: 'Rafiqul Alam',
       phone: '+8801712346872',
-      email: 'chittagongtrading@gmail.com',
       transactionType: 'Nagad',
       location: 'Chittagong',
-      products: ['Vegetables', 'Fruits', 'Grains'],
-      rating: 4.6,
       totalOrders: 89,
-      joinDate: '2023-05-20'
     },
     {
       id: 'S003',
       shopName: 'Sylhet Supermart',
       ownerName: 'Mahfuz Ullah',
       phone: '+8801712346873',
-      email: 'sylhetsupermart@gmail.com',
       transactionType: 'Rocket',
       location: 'Sylhet',
-      products: ['Tea', 'Spices', 'Organic Products'],
-      rating: 4.9,
       totalOrders: 203,
-      joinDate: '2023-01-10'
     },
     {
       id: 'S004',
       shopName: 'Rajshahi Hub',
       ownerName: 'Jamal Hossain',
       phone: '+8801712346874',
-      email: 'rajshahihub@gmail.com',
       transactionType: 'Bank',
       location: 'Rajshahi',
-      products: ['Mango', 'Silk', 'Handicrafts'],
-      rating: 4.7,
       totalOrders: 134,
-      joinDate: '2023-04-08'
     },
     {
       id: 'S005',
       shopName: 'Khulna Wholesale',
       ownerName: 'Rafiqul Rahman',
       phone: '+8801712346875',
-      email: 'khulnawholesale@gmail.com',
       transactionType: 'bKash',
       location: 'Khulna',
-      products: ['Shrimp', 'Fish', 'Seafood'],
-      rating: 4.5,
       totalOrders: 98,
-      joinDate: '2023-06-12'
     }
   ];
 
@@ -203,7 +183,6 @@ const Farmers = () => {
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Owner Name</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Phone Number</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Transaction Type</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                 </tr>
               </thead>
@@ -219,12 +198,6 @@ const Farmers = () => {
                       {seller.phone}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">{getTransactionBadge(seller.transactionType)}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 flex items-center">
-                      <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                      </svg>
-                      {seller.email}
-                    </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
                       <Button 
                         variant="outline" 

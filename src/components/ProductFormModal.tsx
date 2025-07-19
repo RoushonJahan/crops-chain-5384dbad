@@ -19,7 +19,6 @@ const ProductFormModal = ({ isOpen, onClose, onSave, product = null }) => {
     quantity: "",
     shopName: "",
     location: "",
-    status: "available",
     description: "",
     farmDetails: "",
     harvestDate: "",
@@ -34,7 +33,6 @@ const ProductFormModal = ({ isOpen, onClose, onSave, product = null }) => {
         quantity: product.quantity || "",
         shopName: product.shopName || "",
         location: product.location || "",
-        status: product.status || "available",
         description: product.description || "",
         farmDetails: product.farmDetails || "",
         harvestDate: product.harvestDate || "",
@@ -47,7 +45,6 @@ const ProductFormModal = ({ isOpen, onClose, onSave, product = null }) => {
         quantity: "",
         shopName: "",
         location: "",
-        status: "available",
         description: "",
         farmDetails: "",
         harvestDate: "",
@@ -55,17 +52,96 @@ const ProductFormModal = ({ isOpen, onClose, onSave, product = null }) => {
     }
   }, [product, isOpen]);
 
-  useEffect(() => {
-    // Auto set status based on quantity
-    if (parseInt(formData.quantity) === 0) {
-      setFormData((prev) => ({ ...prev, status: "stock-out" }));
-    } else if (
-      parseInt(formData.quantity) > 0 &&
-      formData.status === "stock-out"
-    ) {
-      setFormData((prev) => ({ ...prev, status: "available" }));
+  const demoSellers = [
+    {
+      id: 'S001',
+      shopName: 'Dhaka Electronics',
+      ownerName: 'Kazi Hassan',
+      phone: '+8801712346881',
+      email: 'dhakaelectronics@gmail.com',
+      transactionType: 'bKash',
+      location: 'Dhaka',
+      products: ['Rice', 'Wheat', 'Electronics'],
+      rating: 4.8,
+      totalOrders: 156,
+      joinDate: '2023-03-15'
+    },
+    {
+      id: 'S002',
+      shopName: 'Chittagong Traders',
+      ownerName: 'Rafiqul Alam',
+      phone: '+8801712346872',
+      email: 'chittagongtrading@gmail.com',
+      transactionType: 'Nagad',
+      location: 'Chittagong',
+      products: ['Vegetables', 'Fruits', 'Grains'],
+      rating: 4.6,
+      totalOrders: 89,
+      joinDate: '2023-05-20'
+    },
+    {
+      id: 'S003',
+      shopName: 'Sylhet Supermart',
+      ownerName: 'Mahfuz Ullah',
+      phone: '+8801712346873',
+      email: 'sylhetsupermart@gmail.com',
+      transactionType: 'Rocket',
+      location: 'Sylhet',
+      products: ['Tea', 'Spices', 'Organic Products'],
+      rating: 4.9,
+      totalOrders: 203,
+      joinDate: '2023-01-10'
+    },
+    {
+      id: 'S004',
+      shopName: 'Rajshahi Hub',
+      ownerName: 'Jamal Hossain',
+      phone: '+8801712346874',
+      email: 'rajshahihub@gmail.com',
+      transactionType: 'Bank',
+      location: 'Rajshahi',
+      products: ['Mango', 'Silk', 'Handicrafts'],
+      rating: 4.7,
+      totalOrders: 134,
+      joinDate: '2023-04-08'
+    },
+    {
+      id: 'S005',
+      shopName: 'Khulna Wholesale',
+      ownerName: 'Rafiqul Rahman',
+      phone: '+8801712346875',
+      email: 'khulnawholesale@gmail.com',
+      transactionType: 'bKash',
+      location: 'Khulna',
+      products: ['Shrimp', 'Fish', 'Seafood'],
+      rating: 4.5,
+      totalOrders: 98,
+      joinDate: '2023-06-12'
     }
-  }, [formData.quantity]);
+  ];
+
+  const [sellers, setSellers] = useState(demoSellers);
+  const [selectedSeller, setSelectedSeller] = useState('');
+
+    const fetchSellers = async () => {
+      try {
+        const response = await axios.get(`${BASE_URL}/farmers`);
+        if (response.data && response.data.length > 0) {
+          setSellers(response.data);
+        } else {
+          setSellers(demoSellers);
+        }
+      } catch (error) {
+        console.error('Failed to fetch sellers:', error);
+        setSellers(demoSellers);
+      }
+    };
+
+
+
+  useEffect(() => {
+    fetchSellers();
+  }, []);
 
   if (!isOpen) return null;
 
@@ -167,76 +243,27 @@ const ProductFormModal = ({ isOpen, onClose, onSave, product = null }) => {
             </div>
           </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Status
-            </label>
-            <Select
-              value={formData.status}
-              onValueChange={(value) =>
-                setFormData({ ...formData, status: value })
-              }
-              disabled={parseInt(formData.quantity) === 0}
-            >
-              <SelectTrigger>
-                <SelectValue placeholder="Select status" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="available">Available</SelectItem>
-                <SelectItem value="stock-out">Stock Out</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
+          <div className="mb-6">
+              <label className="block text-sm font-medium text-gray-700 mb-2">Select Shop Name</label>
+              <Select value={selectedSeller} onValueChange={setSelectedSeller}>
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Choose seller shop name" />
+                </SelectTrigger>
+                <SelectContent>
+                  {sellers.map((seller) => (
+                    <SelectItem key={seller.id} value={seller.id}>
+                      <div className="flex items-center justify-between w-full">
+                        <span>{seller.shopName}</span>
+                        <span className="text-sm text-gray-500 ml-2">
+                          {seller.ownerName} ({seller.location})
+                        </span>
+                      </div>
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Shop Name
-            </label>
-            <Input
-              value={formData.shopName}
-              onChange={(e) =>
-                setFormData({ ...formData, shopName: e.target.value })
-              }
-              required
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Location
-            </label>
-            <Input
-              value={formData.location}
-              onChange={(e) =>
-                setFormData({ ...formData, location: e.target.value })
-              }
-              required
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Description
-            </label>
-            <Input
-              value={formData.description}
-              onChange={(e) =>
-                setFormData({ ...formData, description: e.target.value })
-              }
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Farm Details
-            </label>
-            <Input
-              value={formData.farmDetails}
-              onChange={(e) =>
-                setFormData({ ...formData, farmDetails: e.target.value })
-              }
-            />
-          </div>
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
