@@ -8,9 +8,7 @@ const Navigation = () => {
     <nav className="bg-white shadow-sm border-b px-6 py-4">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         <div className="flex items-center space-x-2">
-          <div className="w-8 h-8 bg-green-600 rounded-lg flex items-center justify-center">
-            <span className="text-white font-bold text-sm">C</span>
-          </div>
+          <img src="/icon.png" alt="CropsChain Icon" className="w-12 h-12 rounded-lg" />
           <span className="text-xl font-bold text-gray-900">CropsChain</span>
         </div>
         

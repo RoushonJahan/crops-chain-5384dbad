@@ -119,7 +119,7 @@ const Buyers = () => {
             </svg>
           </div>
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">List of Verified Sellers</h1>
+            <h1 className="text-2xl font-bold text-gray-900">List of Buyers</h1>
             <p className="text-gray-600">Manage and view all registered sellers on the platform.</p>
           </div>
         </div>
@@ -137,7 +137,7 @@ const Buyers = () => {
 
         <div className="bg-white rounded-xl shadow-sm border overflow-hidden">
           <div className="p-6 border-b">
-            <h2 className="text-lg font-semibold">List of Verified Sellers</h2>
+            <h2 className="text-lg font-semibold">List of Buyers</h2>
           </div>
           
           <div className="overflow-x-auto">
