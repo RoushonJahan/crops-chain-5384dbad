@@ -29,7 +29,6 @@ const TransportFormModal = ({ isOpen, onClose, transportData, mode, onSave }: Tr
     specialization: '',
     coverage: '',
     contact: '',
-    email: '',
     features: [] as string[]
   });
 
@@ -44,7 +43,6 @@ const TransportFormModal = ({ isOpen, onClose, transportData, mode, onSave }: Tr
         specialization: transportData.specialization || '',
         coverage: transportData.coverage || '',
         contact: transportData.contact || '',
-        email: transportData.email || '',
         features: transportData.features || []
       });
     } else {
@@ -57,7 +55,6 @@ const TransportFormModal = ({ isOpen, onClose, transportData, mode, onSave }: Tr
         specialization: '',
         coverage: '',
         contact: '',
-        email: '',
         features: []
       });
     }
@@ -228,16 +225,6 @@ const TransportFormModal = ({ isOpen, onClose, transportData, mode, onSave }: Tr
                 value={formData.contact}
                 onChange={(e) => handleInputChange('contact', e.target.value)}
                 placeholder="+8801712345678"
-              />
-            </div>
-            <div>
-              <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                type="email"
-                value={formData.email}
-                onChange={(e) => handleInputChange('email', e.target.value)}
-                placeholder="company@email.com"
               />
             </div>
           </div>

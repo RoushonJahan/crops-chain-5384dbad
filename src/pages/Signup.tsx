@@ -2,31 +2,60 @@ import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Link } from "react-router-dom";
-import { Eye, EyeOff, Mail, Lock, User, Phone } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { Eye, EyeOff, Mail, Lock, User, Phone, MapPin, Store, UserCheck } from "lucide-react";
 
 const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone: '',
     password: '',
-    confirmPassword: ''
+    confirmPassword: '',
+    role: 'farmer',
+    location: '',
+    shopName: '',
+    ownerName: '',
+    transactionType: ''
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (formData.password !== formData.confirmPassword) {
       alert('Passwords do not match');
       return;
     }
-    // Handle signup logic here
-    console.log('Signup attempt:', formData);
+    
+    setIsLoading(true);
+    try {
+      const response = await fetch('http://localhost:3000/auth/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert(`Account created successfully! OTP: ${data.otp}`);
+        navigate('/otp-verification', { state: { phone: formData.phone } });
+      } else {
+        alert(data.message || 'Signup failed');
+      }
+    } catch (error) {
+      alert('An error occurred. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
@@ -145,6 +174,92 @@ const Signup = () => {
               </div>
             </div>
 
+            <div className="space-y-2">
+              <Label htmlFor="role">Role</Label>
+              <div className="relative">
+                <UserCheck className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                <select
+                  id="role"
+                  name="role"
+                  value={formData.role}
+                  onChange={handleChange}
+                  className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                  required
+                >
+                  <option value="farmer">Farmer</option>
+                  <option value="buyer">Buyer</option>
+                </select>
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="location">Location</Label>
+              <div className="relative">
+                <MapPin className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                <Input
+                  id="location"
+                  name="location"
+                  type="text"
+                  placeholder="Enter your location"
+                  value={formData.location}
+                  onChange={handleChange}
+                  className="pl-10"
+                  required
+                />
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="shopName">{formData.role === 'farmer' ? 'Farm Name' : 'Shop Name'}</Label>
+              <div className="relative">
+                <Store className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                <Input
+                  id="shopName"
+                  name="shopName"
+                  type="text"
+                  placeholder={formData.role === 'farmer' ? 'Enter your farm name' : 'Enter your shop name'}
+                  value={formData.shopName}
+                  onChange={handleChange}
+                  className="pl-10"
+                  required
+                />
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="ownerName">Owner Name</Label>
+              <div className="relative">
+                <User className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                <Input
+                  id="ownerName"
+                  name="ownerName"
+                  type="text"
+                  placeholder="Enter owner name"
+                  value={formData.ownerName}
+                  onChange={handleChange}
+                  className="pl-10"
+                  required
+                />
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="transactionType">Transaction Type</Label>
+              <div className="relative">
+                <Store className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                <Input
+                  id="transactionType"
+                  name="transactionType"
+                  type="text"
+                  placeholder="Enter transaction type"
+                  value={formData.transactionType}
+                  onChange={handleChange}
+                  className="pl-10"
+                  required
+                />
+              </div>
+            </div>
+
             <div className="flex items-start">
               <input type="checkbox" className="rounded border-gray-300 text-green-600 focus:ring-green-500 mt-1" required />
               <label className="ml-2 text-sm text-gray-600">
@@ -159,8 +274,12 @@ const Signup = () => {
               </label>
             </div>
 
-            <Button type="submit" className="w-full bg-green-600 hover:bg-green-700">
-              Create account
+            <Button 
+              type="submit" 
+              className="w-full bg-green-600 hover:bg-green-700"
+              disabled={isLoading}
+            >
+              {isLoading ? 'Creating account...' : 'Create account'}
             </Button>
           </form>
 

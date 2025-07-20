@@ -12,7 +12,6 @@ const SellerFormModal = ({ isOpen, onClose, onSave, seller = null }) => {
     shopName: '',
     ownerName: '',
     phone: '',
-    email: '',
     location: '',
     transactionType: '',
     products: []
@@ -25,7 +24,6 @@ const SellerFormModal = ({ isOpen, onClose, onSave, seller = null }) => {
         shopName: seller.shopName || '',
         ownerName: seller.ownerName || '',
         phone: seller.phone || '',
-        email: seller.email || '',
         location: seller.location || '',
         transactionType: seller.transactionType || '',
         products: seller.products || []
@@ -36,7 +34,6 @@ const SellerFormModal = ({ isOpen, onClose, onSave, seller = null }) => {
         shopName: '',
         ownerName: '',
         phone: '',
-        email: '',
         location: '',
         transactionType: '',
         products: []
@@ -107,15 +104,6 @@ const SellerFormModal = ({ isOpen, onClose, onSave, seller = null }) => {
             />
           </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
-            <Input
-              type="email"
-              value={formData.email}
-              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-              required
-            />
-          </div>
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Location</label>
