@@ -206,13 +206,24 @@ const Products = () => {
     setFilters(newFilters);
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+   
+      const response = await axios.post(`${BASE_URL}/orders`, orderInfo);
+      
+    } catch (error) {
+      console.error("Failed to update product:", error);
+    }
+  };
+
   const filteredProducts = products.filter(product => {
     const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       product.shopName.toLowerCase().includes(searchTerm.toLowerCase()) ||
       product.location.toLowerCase().includes(searchTerm.toLowerCase());
     
     const matchesFilter = (!filters.search || product.name.toLowerCase().includes(filters.search.toLowerCase())) &&
-      (!filters.status || (filters.status === 'available' ? product.quantity >= 100 : product.quantity < 100)) &&
+      (product.quantity >= 0 ) &&
       (!filters.location || product.location.toLowerCase().includes(filters.location.toLowerCase()));
 
     return matchesSearch && matchesFilter;
@@ -334,7 +345,10 @@ const Products = () => {
         <PaymentModal
           orderInfo={orderInfo}
           onClose={() => setShowPaymentModal(false)}
-          onComplete={handlePaymentComplete}
+          onComplete={() => {
+            handlePaymentComplete();
+            handleSubmit(orderInfo);
+          }}
           onBack={handlePaymentBack}
         />
       )}

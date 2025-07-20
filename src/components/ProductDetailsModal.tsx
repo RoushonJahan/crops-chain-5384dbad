@@ -5,8 +5,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Badge } from "@/components/ui/badge";
 import axios from 'axios';
 import { BASE_URL } from '../config';
-import PaymentModal from "@/components/PaymentModal";
-import TransportDetailsModal from "@/components/TransportDetailsModal";
 
 const ProductDetailsModal = ({ product, onClose, onConfirm, onViewTransportDetails }) => {
   const [deliveryLocation, setDeliveryLocation] = useState('Dhaka');

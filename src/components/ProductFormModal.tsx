@@ -23,6 +23,10 @@ const ProductFormModal = ({ isOpen, onClose, onSave, product = null }) => {
   });
 
   useEffect(() => {
+    fetchSellers();
+  }, []);
+
+  useEffect(() => {
     if (product) {
       setFormData({
         id: product.id || "",
@@ -68,27 +72,39 @@ const ProductFormModal = ({ isOpen, onClose, onSave, product = null }) => {
       joinDate: "2023-05-20",
     },
   ];
-
   const [sellers, setSellers] = useState(demoSellers);
   const [selectedSeller, setSelectedSeller] = useState("");
+  const [sellersMap, setSellersMap] = useState({});
 
   const fetchSellers = async () => {
     try {
       const response = await axios.get(`${BASE_URL}/farmers`);
+      let fetchedSellers;
       if (response.data && response.data.length > 0) {
-        setSellers(response.data);
+        fetchedSellers = response.data;
+        setSellers(fetchedSellers);
       } else {
+        fetchedSellers = demoSellers;
         setSellers(demoSellers);
       }
+
+    const map = {};
+    fetchedSellers.forEach(seller => {
+      map[seller.id] = seller;
+    });
+    setSellersMap(map);
+    setSelectedSeller(sellersMap[product?.shopId]?.id)
     } catch (error) {
       console.error("Failed to fetch sellers:", error);
       setSellers(demoSellers);
+      const map = {};
+      demoSellers.forEach(seller => {
+        map[seller.id] = seller;
+      });
+      setSellersMap(map);
     }
   };
 
-  useEffect(() => {
-    fetchSellers();
-  }, []);
 
   if (!isOpen) return null;
 

@@ -52,11 +52,11 @@ const SellerFormModal = ({ isOpen, onClose, onSave, seller = null }) => {
       let response;
       if (seller) {
         response = await axios.put(
-          `${BASE_URL}/sellers/${formData.id}`,
+          `${BASE_URL}/farmers/${formData.id}`,
           formData
         );
       } else {
-        response = await axios.post(`${BASE_URL}/sellers`, formData);
+        response = await axios.post(`${BASE_URL}/farmers`, formData);
       }
       onSave(response.data);
       onClose();
