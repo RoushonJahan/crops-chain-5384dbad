@@ -21,6 +21,7 @@ interface TransportFormModalProps {
 const TransportFormModal = ({ isOpen, onClose, transportData, mode, onSave }: TransportFormModalProps) => {
   const { toast } = useToast();
   const [formData, setFormData] = useState({
+    id: '',
     name: '',
     vehicle: '',
     type: '',
@@ -35,6 +36,7 @@ const TransportFormModal = ({ isOpen, onClose, transportData, mode, onSave }: Tr
   useEffect(() => {
     if (transportData && mode === 'edit') {
       setFormData({
+        id: transportData.id || '',
         name: transportData.name || '',
         vehicle: transportData.vehicle || '',
         type: transportData.type || '',
@@ -47,6 +49,7 @@ const TransportFormModal = ({ isOpen, onClose, transportData, mode, onSave }: Tr
       });
     } else {
       setFormData({
+        id: `TR${String(Date.now()).slice(-3)}`,
         name: '',
         vehicle: '',
         type: '',

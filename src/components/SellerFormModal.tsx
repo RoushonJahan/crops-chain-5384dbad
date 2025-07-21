@@ -6,7 +6,9 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { BASE_URL } from '../config';
 
-const SellerFormModal = ({ isOpen, onClose, onSave, seller = null, onRefresh }) => {
+const SellerFormModal = ({ isOpen, onClose, onSave, userType, seller = null, onRefresh }) => {
+  const userTypeFarmer = "farmer"
+  const userTypeBuyer = "buyer"
   const [formData, setFormData] = useState({
     id: '',
     shopName: '',
@@ -28,7 +30,7 @@ const SellerFormModal = ({ isOpen, onClose, onSave, seller = null, onRefresh }) 
       });
     } else {
       setFormData({
-        id: `S${String(Date.now()).slice(-3)}`,
+        id: userType === userTypeFarmer ? `F${String(Date.now()).slice(-3)}`: `B${String(Date.now()).slice(-3)}`,
         shopName: '',
         ownerName: '',
         phone: '',
@@ -44,13 +46,23 @@ const SellerFormModal = ({ isOpen, onClose, onSave, seller = null, onRefresh }) 
     e.preventDefault();
     try {
       let response;
-      if (seller) {
+      if (seller && userType === userTypeFarmer) {
         response = await axios.put(
           `${BASE_URL}/farmers/${formData.id}`,
           formData
         );
-      } else {
+      } 
+      else if (seller && userType === userTypeBuyer) {
+        response = await axios.put(
+          `${BASE_URL}/buyers/${formData.id}`,
+          formData
+        );
+      }
+      if (!seller && userType === userTypeFarmer) {
         response = await axios.post(`${BASE_URL}/farmers`, formData);
+      }
+      else {
+        response = await axios.post(`${BASE_URL}/buyers`, formData);
       }
       onSave(response.data);
       onClose();

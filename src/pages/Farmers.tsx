@@ -29,6 +29,7 @@ const Farmers = () => {
     status: "",
     location: "",
   });
+  const userType = "farmer"
 
   const demoSellers = [
     {
@@ -186,6 +187,9 @@ const refreshSellers = () => {
               <thead className="bg-gray-50">
                 <tr>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Shop ID
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Shop Name
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -209,6 +213,9 @@ const refreshSellers = () => {
                     className="hover:bg-gray-50 transition-colors"
                   >
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                    {seller.id}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                       {seller.shopName}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
@@ -296,6 +303,7 @@ const refreshSellers = () => {
         onClose={() => setShowSellerForm(false)}
         onSave={handleSaveSeller}
         onRefresh={refreshSellers} // Add this prop
+        userType={userType}
         seller={editingSeller}
       />
     </div>

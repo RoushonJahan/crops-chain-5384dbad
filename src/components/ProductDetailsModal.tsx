@@ -99,6 +99,7 @@ const ProductDetailsModal = ({ product, onClose, onConfirm, onViewTransportDetai
     if (deliveryLocation && selectedTransport && quantity > 0) {
       const transportObj = transportCompanies.find(t => t.id === selectedTransport);
       onConfirm({
+        id: `ORD${String(Date.now()).slice(-3)}`,
         product,
         quantity,
         deliveryLocation,

@@ -203,11 +203,40 @@ const Products = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
     try {
-   
-      const response = await axios.post(`${BASE_URL}/orders`, orderInfo);
+      const currentDate = new Date();
+      const estimatedDelivery = new Date();
+      estimatedDelivery.setDate(currentDate.getDate() + 3);
       
+      const dateString = currentDate.toLocaleDateString('en-US', { 
+        year: 'numeric', 
+        month: 'short', 
+        day: 'numeric' 
+      });
+      
+      const estimatedDeliveryString = estimatedDelivery.toLocaleDateString('en-US', { 
+        year: 'numeric', 
+        month: 'short', 
+        day: 'numeric' 
+      });
+      const orderInfoDto = { 
+        id: `ORD${String(Date.now()).slice(-3)}`,
+        type: orderInfo?.product?.name,
+        date: dateString,
+        status: 'Confirmation Pending',
+        quantity: orderInfo?.product?.quantity,
+        totalPrice: orderInfo?.product?.price * orderInfo?.product?.quantity,
+        location: orderInfo?.deliveryLocation,
+        estimatedDelivery: estimatedDeliveryString,
+        trackingId: `TRK${String(Date.now()).slice(-3)}`,
+        productId: orderInfo?.product?.id,
+        sellerShopId: orderInfo?.product?.shopId,
+        buyerShopId: 'SHP00001',
+        transportId: orderInfo?.transport?.id,
+        transationId: `PAY${String(Date.now()).slice(-3)}`,
+       };
+      const response = await axios.post(`${BASE_URL}/orders`, orderInfoDto);
+      console.log(response);
     } catch (error) {
       console.error("Failed to update product:", error);
     }
@@ -357,6 +386,7 @@ const Products = () => {
 
       <TrackingModal 
         isOpen={showTracking}
+        currentStatus='confirmation-pending'
         onClose={() => setShowTracking(false)}
       />
 
