@@ -17,8 +17,6 @@ import TransportDetailsModal from "@/components/TransportDetailsModal";
 
 interface ProductFilters {
   search: string;
-  category: string;
-  status: string;
   location: string;
 }
 
@@ -32,8 +30,6 @@ const Products = () => {
   const [editingProduct, setEditingProduct] = useState(null);
   const [filters, setFilters] = useState<ProductFilters>({
     search: '',
-    category: '',
-    status: '',
     location: ''
   });
 

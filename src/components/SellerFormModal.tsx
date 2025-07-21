@@ -14,7 +14,6 @@ const SellerFormModal = ({ isOpen, onClose, onSave, seller = null }) => {
     phone: '',
     location: '',
     transactionType: '',
-    products: []
   });
 
   useEffect(() => {
@@ -26,7 +25,6 @@ const SellerFormModal = ({ isOpen, onClose, onSave, seller = null }) => {
         phone: seller.phone || '',
         location: seller.location || '',
         transactionType: seller.transactionType || '',
-        products: seller.products || []
       });
     } else {
       setFormData({
@@ -36,7 +34,6 @@ const SellerFormModal = ({ isOpen, onClose, onSave, seller = null }) => {
         phone: '',
         location: '',
         transactionType: '',
-        products: []
       });
     }
   }, [seller, isOpen]);

@@ -126,8 +126,8 @@ const Farmers = () => {
             </svg>
           </div>
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">List of Sellers</h1>
-            <p className="text-gray-600">Manage and view all registered farmers and sellers on the platform.</p>
+            <h1 className="text-2xl font-bold text-gray-900">List of Farmers</h1>
+            <p className="text-gray-600">Manage and view all registered farmers on the platform.</p>
           </div>
         </div>
 
@@ -138,13 +138,13 @@ const Farmers = () => {
           </Button>
           <Button className="bg-green-600 hover:bg-green-700 gap-2" onClick={handleCreate}>
             <Plus className="w-4 h-4" />
-            Add Seller
+            Add Farmer
           </Button>
         </div>
 
         <div className="bg-white rounded-xl shadow-sm border overflow-hidden">
           <div className="p-6 border-b">
-            <h2 className="text-lg font-semibold">List of Available Sellers</h2>
+            <h2 className="text-lg font-semibold">List of Farmers</h2>
           </div>
           
           <div className="overflow-x-auto">

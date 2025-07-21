@@ -54,36 +54,6 @@ const FilterModal: React.FC<FilterModalProps> = ({ isOpen, onClose, onApplyFilte
             />
           </div>
 
-          {filterType === 'Products' && (
-            <>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
-                <Select value={filters.category} onValueChange={(value) => setFilters({ ...filters, category: value })}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select category" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="grains">Grains</SelectItem>
-                    <SelectItem value="vegetables">Vegetables</SelectItem>
-                    <SelectItem value="fruits">Fruits</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Status</label>
-                <Select value={filters.status} onValueChange={(value) => setFilters({ ...filters, status: value })}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select status" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="available">Available</SelectItem>
-                    <SelectItem value="stock-out">Stock Out</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </>
-          )}
-
           {(filterType === 'Orders') && (
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Status</label>

@@ -120,7 +120,7 @@ const Buyers = () => {
           </div>
           <div>
             <h1 className="text-2xl font-bold text-gray-900">List of Buyers</h1>
-            <p className="text-gray-600">Manage and view all registered sellers on the platform.</p>
+            <p className="text-gray-600">Manage and view all buyers on the platform.</p>
           </div>
         </div>
 
@@ -131,7 +131,7 @@ const Buyers = () => {
           </Button>
           <Button className="bg-green-600 hover:bg-green-700 gap-2" onClick={handleCreate}>
             <Plus className="w-4 h-4" />
-            Add Seller
+            Add Buyer
           </Button>
         </div>
 
