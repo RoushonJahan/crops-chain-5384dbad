@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { BASE_URL } from '../config';
 
-const SellerFormModal = ({ isOpen, onClose, onSave, seller = null }) => {
+const SellerFormModal = ({ isOpen, onClose, onSave, seller = null, onRefresh }) => {
   const [formData, setFormData] = useState({
     id: '',
     shopName: '',
@@ -54,6 +54,10 @@ const SellerFormModal = ({ isOpen, onClose, onSave, seller = null }) => {
       }
       onSave(response.data);
       onClose();
+      // Add this line to refresh the data
+      if (onRefresh) {
+        onRefresh();
+      }
     } catch (error) {
       console.error('Failed to add seller:', error);
     }
@@ -120,6 +124,8 @@ const SellerFormModal = ({ isOpen, onClose, onSave, seller = null }) => {
               <SelectContent>
                 <SelectItem value="Nagad">Nagad</SelectItem>
                 <SelectItem value="bKash">bKash</SelectItem>
+                <SelectItem value="Upay">Upay</SelectItem>
+                <SelectItem value="Rocket">Rocket</SelectItem>
               </SelectContent>
             </Select>
           </div>

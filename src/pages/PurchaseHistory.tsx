@@ -81,7 +81,7 @@ const PurchaseHistory = () => {
       'bKash': 'bg-pink-100 text-pink-800',
       'Nagad': 'bg-orange-100 text-orange-800',
       'Rocket': 'bg-purple-100 text-purple-800',
-      'Bank': 'bg-blue-100 text-blue-800'
+      'Upay': 'bg-blue-100 text-blue-800'
     };
     return <Badge className={colors[type] || 'bg-gray-100 text-gray-800'}>{type}</Badge>;
   };

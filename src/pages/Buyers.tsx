@@ -55,22 +55,26 @@ const Buyers = () => {
 
   const [sellers, setSellers] = useState(demoSellers);
 
-  useEffect(() => {
-    const fetchSellers = async () => {
-      try {
-        const response = await axios.get(`${BASE_URL}/buyers`);
-        if (response.data && response.data.length > 0) {
-          setSellers(response.data);
-        } else {
-          setSellers(demoSellers);
-        }
-      } catch (error) {
-        console.error('Failed to fetch sellers:', error);
+  const fetchSellers = async () => {
+    try {
+      const response = await axios.get(`${BASE_URL}/buyers`);
+      if (response.data && response.data.length > 0) {
+        setSellers(response.data);
+      } else {
         setSellers(demoSellers);
       }
-    };
+    } catch (error) {
+      console.error('Failed to fetch sellers:', error);
+      setSellers(demoSellers);
+    }
+  };
+  useEffect(() => {
     fetchSellers();
   }, []);
+
+  const refreshSellers = () => {
+    fetchSellers();
+  };
 
   const handleViewSeller = (seller) => {
     setSelectedSeller(seller);
@@ -218,12 +222,13 @@ const Buyers = () => {
         filterType="Sellers"
       />
 
-      <SellerFormModal 
-        isOpen={showSellerForm}
-        onClose={() => setShowSellerForm(false)}
-        onSave={handleSaveSeller}
-        seller={editingSeller}
-      />
+    <SellerFormModal 
+      isOpen={showSellerForm}
+      onClose={() => setShowSellerForm(false)}
+      onSave={handleSaveSeller}
+      onRefresh={refreshSellers}  // Add this prop
+      seller={editingSeller}
+    />
     </div>
   );
 };
